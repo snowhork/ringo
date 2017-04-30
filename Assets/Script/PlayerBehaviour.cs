@@ -8,13 +8,9 @@ namespace Assets.Script
         private PlayerInput _input;
         private PlayerMover _mover;
 
-        private void Awake()
-        {
-            _mover = new PlayerMover(_mapTips);
-        }
-
         private void Start()
         {
+            _mover = new PlayerMover(_mapTips);
             _input = new PlayerInput();
         }
 
