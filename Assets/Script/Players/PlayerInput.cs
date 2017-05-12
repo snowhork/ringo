@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using UnityEngine.VR.WSA;
+﻿using Script.Postions;
+using UnityEngine;
 
-namespace Assets.Script
+namespace Script.Players
 {
     public class PlayerInput
     {

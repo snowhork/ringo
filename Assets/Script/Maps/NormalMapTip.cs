@@ -1,4 +1,7 @@
-﻿public class NormalMapTip : BaseMapTip
+﻿using Script.Maps;
+using Script.Postions;
+
+public class NormalMapTip : BaseMapTip
 {
     public NormalMapTip(Point point) : base(point)
     {

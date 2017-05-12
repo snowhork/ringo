@@ -1,0 +1,195 @@
+class Point<<struct>> {
+  int X
+  int Y
+}
+
+interface IPositionable {
+  Point Point { get; }
+}
+
+class PlayerParameter {
+
+}
+
+
+abstract class BaseMapTip {
+  void Register(ICreature)
+  void Register(IPlayer)
+  void Register(IItem)
+  void Remove(ICreature)
+  void Remove(IPlayer)
+  void Remove(IItem)
+  bool Enterable
+
+  ICreature Creature
+  IPlayer Player
+  IItem Item
+  Point Point
+}
+
+class MapTipsBehaviour<<MonoBehaviour>> {
+   IItem GetItem(Point point)
+   IPlayer GetPlayer(Point point)
+   ICreature GetCreature(Point point)
+   bool EnterableMapTip(Point point)
+}
+
+class MapTipsCollections {
+
+}
+
+class PlayerCore<<MonoBehaviour>> {
+
+}
+
+
+class PlayerInput {
+
+}
+
+class PlayerDamager {
+  PlayerParameter _parameter
+  void Execute(IAttacker)
+}
+
+BaseMapTip --|> IPositionable
+NormalMapTip --|> BaseMapTip
+PlayerParameter --> Weapon
+
+PlayerCore --> PlayerBehaviour
+PlayerCore --> PlayerParameter
+PlayerCore --> MapTipsBehaviour
+PlayerCore --> PlayerDamager
+
+PlayerBehaviour --> PlayerAttacker
+PlayerBehaviour --> PlayerItemGetter
+PlayerBehaviour--> PlayerInput
+PlayerBehaviour --> MapTipsBehaviour
+PlayerBehaviour --> IPositionable
+PlayerBehaviour --> PlayerMover
+
+PlayerMover --> IPlayer
+PlayerMover --> MapTipsBehaviour
+
+PlayerAttacker --|> IAttacker
+
+PlayerAttacker --> PlayerParameter
+PlayerParameter --|> BaseCharacterParameter
+
+PlayerDamager --> PlayerParameter
+
+MapTipsBehaviour --> MapTipsCollections
+
+MapTipsCollections --> BaseMapTip
+
+IPositionable --> Point
+
+
+
+abstract IAttacker {
+
+}
+
+
+abstract class BaseCreatureCore<<MonoBehaviour>> {
+}
+
+abstract class BaseCreatureDamager {
+}
+
+
+abstract class BaseCharacterParameter {
+  int Hp { get; set; }
+  int MaxHp { get; set; }
+  int Attack { get; set; }
+  float Speed { get; set;}
+}
+
+abstract class BaseItemBehaviour<<MonoBehaviour>> {
+
+}
+
+class Weapon {
+
+}
+
+Weapon --|> BaseItemBehaviour
+
+class Portion {
+
+}
+
+Portion --|> BaseItemBehaviour
+
+
+interface ICreature {
+
+}
+
+interface IItem {
+  void Use(PlayerParameter)
+
+}
+
+class PlayerBehaviour {
+
+}
+
+class PlayerAttacker {
+  PlayerParameter _parameter
+  Execute(ICreature creature)
+}
+
+class PlayerItemGetter {
+  PlayerParameter _parameter
+}
+
+abstract BaseCreatureParameter {
+
+}
+
+
+BaseCreatureDamager --> BaseCreatureParameter
+BaseCreatureParameter --|> BaseCharacterParameter
+BaseCreatureCore --> BaseCreatureParameter
+
+BaseItemBehaviour --|> IItem
+
+IItem --|> IPositionable
+IItem --> PlayerParameter
+ICreature--|> IPositionable
+
+BaseCreatureCore --|> ICreature
+BaseCreatureCore --> BaseCreatureDamager
+BaseCreatureCore --> BaseCreatureBehaviour
+BaseCreatureBehaviour --> IPlayer
+
+abstract BaseCreatureBehaviour{
+
+}
+
+BaseCreatureBehaviour --> BaseCreatureParameter
+
+BaseMapTip --> IItem
+BaseMapTip --> ICreature
+BaseMapTip --> IPlayer
+
+interface IPlayer  {
+}
+
+IPlayer --|> IDamagable
+ICreature --|> IDamagable
+IDamagable --|> IAttacker
+
+interface IDamagable {
+  void Damage()
+}
+
+PlayerCore --|> IPlayer
+IPlayer --|> IPositionable
+
+PlayerAttacker --> ICreature
+
+PlayerItemGetter --> IItem
+
+PlayerItemGetter --> PlayerParameter
