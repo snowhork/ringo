@@ -14,6 +14,14 @@ namespace Script.Players
         private PlayerBehaviour _behaviour;
         private PlayerDamager _damager;
 
+        private Point _point;
+
+        public Point Point
+        {
+            get { return _point; }
+            set { _point = value; }
+        }
+
         private void Start()
         {
             _parameter = new PlayerParameter();
@@ -25,12 +33,6 @@ namespace Script.Players
         private void Update()
         {
             _behaviour.Execute();
-        }
-
-        public Point Point
-        {
-            get { return _parameter.Point; }
-            set { _parameter.Point = value; }
         }
 
         public Transform Transform

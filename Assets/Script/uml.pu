@@ -105,21 +105,21 @@ abstract class BaseCharacterParameter {
   float Speed { get; set;}
 }
 
-abstract class BaseItemBehaviour<<MonoBehaviour>> {
-
+abstract class BaseItem<<MonoBehaviour>> {
+  void Initialize(Point)
 }
 
 class Weapon {
 
 }
 
-Weapon --|> BaseItemBehaviour
+Weapon --|> BaseItem
 
 class Portion {
 
 }
 
-Portion --|> BaseItemBehaviour
+Portion --|> BaseItem
 
 
 interface ICreature {
@@ -153,7 +153,8 @@ BaseCreatureDamager --> BaseCreatureParameter
 BaseCreatureParameter --|> BaseCharacterParameter
 BaseCreatureCore --> BaseCreatureParameter
 
-BaseItemBehaviour --|> IItem
+BaseItem --|> IItem
+BaseItem --> MapTipsBehaviour
 
 IItem --|> IPositionable
 IItem --> PlayerParameter
@@ -162,6 +163,7 @@ ICreature--|> IPositionable
 BaseCreatureCore --|> ICreature
 BaseCreatureCore --> BaseCreatureDamager
 BaseCreatureCore --> BaseCreatureBehaviour
+BaseCreatureCore --> MapTipsBehaviour
 BaseCreatureBehaviour --> IPlayer
 
 abstract BaseCreatureBehaviour{

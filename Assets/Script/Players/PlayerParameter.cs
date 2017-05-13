@@ -1,15 +1,12 @@
-﻿using Script.Postions;
+﻿using Script.Characters;
+using Script.Postions;
 
 namespace Script.Players
 {
-    public class PlayerParameter
+    public class PlayerParameter : BaseCharacterParameter
     {
-        private Point _point = new Point(0,0);
-
-        public Point Point
+        public PlayerParameter(int hp=100, int maxHp=100, int attack=10, float speed=1.0f) : base(hp, maxHp, attack, speed)
         {
-            get { return _point; }
-            set { _point = value; }
         }
     }
 }
