@@ -6,14 +6,15 @@ using UnityEngine;
 
 namespace Script.Maps
 {
-    public class MapTipsBehaviour : MonoBehaviour
+    [RequireComponent(typeof(MapTipsCollection))]
+    public class MapTipsCore : MonoBehaviour
     {
         public const float TipSize = 1f;
         private MapTipsCollection _mapTipsCollection;
 
-        private void Awake()
+        private void Start()
         {
-            _mapTipsCollection = new MapTipsCollection();
+            _mapTipsCollection = GetComponent<MapTipsCollection>();
         }
 
         public BaseMapTip GetMapTip(int x, int y)

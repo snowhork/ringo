@@ -6,16 +6,18 @@ using UnityEngine;
 
 namespace Script.Maps
 {
-	public abstract class BaseMapTip : IPositionable
+	public abstract class BaseMapTip : MonoBehaviour, IPositionable
 	{
+		public const float TipSize = 1f;
 		protected Point _point;
 		protected IItem _item;
 		protected ICreature _creature;
 		protected IPlayer _player;
 
-		protected BaseMapTip(Point point)
+		public BaseMapTip Initialize(Point point)
 		{
 			_point = point;
+			return this;
 		}
 
 		public IItem Item
@@ -70,6 +72,11 @@ namespace Script.Maps
 		{
 			if(player != _player) return;
 			_player = null;
+		}
+
+		public void SetTransforn()
+		{
+			transform.position = new Vector3(TipSize*Point.X, 0, TipSize*Point.Y);
 		}
 
 		public abstract bool Enterable();

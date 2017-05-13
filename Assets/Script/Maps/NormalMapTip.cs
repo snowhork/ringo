@@ -1,19 +1,11 @@
-﻿using Script.Maps;
-using Script.Postions;
-
-public class NormalMapTip : BaseMapTip
+﻿namespace Script.Maps
 {
-    public NormalMapTip(Point point) : base(point)
+    public class NormalMapTip : BaseMapTip
     {
-    }
-
-    public NormalMapTip(int x, int y) : base(new Point(x, y))
-    {
-    }
-
-    public override bool Enterable()
-    {
-        return true;
+        public override bool Enterable()
+        {
+            return true;
+        }
     }
 }
 

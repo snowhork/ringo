@@ -2,20 +2,12 @@
 
 namespace Script.Characters
 {
-    public class BaseCharacterParameter
+    public class BaseCharacterParameter : MonoBehaviour
     {
-        private int _hp;
-        private int _maxHp;
-        private int _attack;
-        private float _speed;
-
-        public BaseCharacterParameter(int hp, int maxHp, int attack, float speed)
-        {
-            _hp = hp;
-            _maxHp = maxHp;
-            _attack = attack;
-            _speed = speed;
-        }
+        [SerializeField] private int _hp;
+        [SerializeField] private int _maxHp;
+        [SerializeField] private int _attack;
+        [SerializeField] private float _speed;
 
         public int Hp
         {

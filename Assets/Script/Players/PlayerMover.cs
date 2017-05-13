@@ -1,18 +1,18 @@
 ﻿using Script.Maps;
 using Script.Postions;
 using UnityEngine;
+using Zenject;
 
 namespace Script.Players
 {
-    public class PlayerMover
+    public class PlayerMover : MonoBehaviour
     {
-        private readonly MapTipsBehaviour _mapTips;
-        private readonly IPlayer _player;
+        [Inject] private MapTipsCore _mapTips;
+        private IPlayer _player;
 
-        public PlayerMover(MapTipsBehaviour mapTips, IPlayer player)
+        private void Start()
         {
-            _mapTips = mapTips;
-            _player = player;
+            _player = GetComponent<IPlayer>();
         }
 
         public void Execute(Point point)

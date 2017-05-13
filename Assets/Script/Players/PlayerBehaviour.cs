@@ -1,25 +1,31 @@
 ﻿using Script.Maps;
 using Script.Postions;
 using UnityEngine;
+using Zenject;
 
 namespace Script.Players
 {
-    public class PlayerBehaviour
+    [RequireComponent(typeof(PlayerParameter), typeof(PlayerMover), typeof(IPlayer))]
+    public class PlayerBehaviour : MonoBehaviour
     {
-        private readonly PlayerInput _input = new PlayerInput();
-        private readonly PlayerItemGetter _getter;
-        private readonly PlayerAttacker _attacker;
-        private readonly PlayerMover _mover;
-        private readonly IPlayer _player;
-        private readonly MapTipsBehaviour _mapTips;
+        private PlayerItemGetter _getter;
+        private PlayerAttacker _attacker;
+        private PlayerInput _input;
 
-        public PlayerBehaviour(IPlayer player, MapTipsBehaviour mapTips, PlayerParameter parameter)
+        private PlayerParameter _parameter;
+        private PlayerMover _mover;
+        private IPlayer _player;
+        [Inject] private MapTipsCore _mapTips;
+
+        private void Start()
         {
-            _player = player;
-            _mapTips = mapTips;
-            _mover = new PlayerMover(_mapTips, _player);
-            _attacker = new PlayerAttacker(parameter);
-            _getter = new PlayerItemGetter(parameter);
+            _mover = GetComponent<PlayerMover>();
+            _player = GetComponent<IPlayer>();
+            _parameter = GetComponent<PlayerParameter>();
+
+            _attacker = new PlayerAttacker(_parameter);
+            _getter = new PlayerItemGetter(_parameter);
+            _input = new PlayerInput();
         }
 
         public void Execute()
@@ -47,8 +53,8 @@ namespace Script.Players
                 }
                 _mover.Execute(inputMove);
 
-                _player.Transform.position += new Vector3(inputMove.X * MapTipsBehaviour.TipSize, 0,
-                    inputMove.Y * MapTipsBehaviour.TipSize);
+                _player.Transform.position += new Vector3(inputMove.X * MapTipsCore.TipSize, 0,
+                    inputMove.Y * MapTipsCore.TipSize);
 
             }
         }

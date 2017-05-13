@@ -1,34 +1,41 @@
 ﻿using System.Collections.Generic;
-using Script.Maps;
+using Script.Postions;
+using UnityEngine;
 
-public class MapTipsCollection
+namespace Script.Maps
 {
-    public const int MapRowsNum = 6;
-    public const int MapColsNum = 12;
-    private List<BaseMapTip>[] _mapTipsRows;
-
-    public MapTipsCollection()
+    public class MapTipsCollection : MonoBehaviour
     {
-        _mapTipsRows = new List<BaseMapTip>[MapRowsNum];
-        for (var i = 0; i < MapRowsNum; i++)
+        public const int MapRowsNum = 6;
+        public const int MapColsNum = 12;
+        private List<BaseMapTip>[] _mapTipsRows;
+        [SerializeField] private BaseMapTip[] _mapTipPref;
+
+        private void Awake()
         {
-            _mapTipsRows[i] = new List<BaseMapTip>();
-            for (var j = 0; j < MapColsNum; j++)
+            _mapTipsRows = new List<BaseMapTip>[MapRowsNum];
+            for (var i = 0; i < MapRowsNum; i++)
             {
-                _mapTipsRows[i].Add(new NormalMapTip(i, j));
+                _mapTipsRows[i] = new List<BaseMapTip>();
+                for (var j = 0; j < MapColsNum; j++)
+                {
+                    var tip = Instantiate(_mapTipPref[0]).Initialize(new Point(j, i));
+                    tip.SetTransforn();
+                    _mapTipsRows[i].Add(tip);
+                }
             }
         }
-    }
 
-    public BaseMapTip GetMapTip(int x, int y)
-    {
-        return _mapTipsRows[y][x];
-    }
+        public BaseMapTip GetMapTip(int x, int y)
+        {
+            return _mapTipsRows[y][x];
+        }
 
-    public bool Enterable(int x, int y)
-    {
-        return y >= 0 && y < MapRowsNum && x >= 0 && x < MapColsNum &&
-               _mapTipsRows[y][x].Enterable();
+        public bool Enterable(int x, int y)
+        {
+            return y >= 0 && y < MapRowsNum && x >= 0 && x < MapColsNum &&
+                   _mapTipsRows[y][x].Enterable();
+        }
     }
 }
 

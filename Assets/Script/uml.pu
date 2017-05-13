@@ -15,7 +15,7 @@ class PlayerParameter {
 abstract class BaseMapTip {
   void Register(ICreature)
   void Register(IPlayer)
-  void Register(IItem)
+  void Register(IItem)
   void Remove(ICreature)
   void Remove(IPlayer)
   void Remove(IItem)
