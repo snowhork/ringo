@@ -1,5 +1,7 @@
 ﻿using Script.Players;
 using Script.Postions;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 
 namespace Script.Items
@@ -10,13 +12,19 @@ namespace Script.Items
 
         private void Start()
         {
-            Point = new Point(2,2);
-            transform.position = new Vector3() + new Vector3(-0.5f, 0, -0.5f);
+            this.UpdateAsObservable().Take(1)
+                .Subscribe(_ =>
+                {
+                    _point = new Point(Random.Range(0, 10), Random.Range(0, 5));
+                    MapTips.GetMapTip(Point).Register(this);
+                    SetTransforn();
+                });
         }
 
         public override void Use(PlayerParameter parameter)
         {
             parameter.Hp += _hpValue;
+            Destroy(gameObject);
         }
     }
 }

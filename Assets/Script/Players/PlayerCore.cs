@@ -1,6 +1,9 @@
-﻿using Script.Attackers;
+﻿using System;
+using Script.Attackers;
 using Script.Maps;
 using Script.Postions;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 using Zenject;
 
@@ -25,11 +28,16 @@ namespace Script.Players
 
         private void Start()
         {
-            _point = new Point(0,0);
             _parameter = GetComponent<PlayerParameter>();
             _behaviour = GetComponent<PlayerBehaviour>();
             _damager = GetComponent<PlayerDamager>();
-            _mapTips.GetMapTip(Point).Register(this);
+            this.UpdateAsObservable().Take(1)
+                .Subscribe(_ =>
+                {
+                    _point = new Point(0,0);
+                    _mapTips.GetMapTip(Point).Register(this);
+                    SetTransforn();
+                });
         }
 
         private void Update()
@@ -49,7 +57,7 @@ namespace Script.Players
 
         public void SetTransforn()
         {
-            transform.position = new Vector3(BaseMapTip.TipSize*Point.X, 0, BaseMapTip.TipSize*Point.Y);
+            transform.position = new Vector3(BaseMapTip.TipSize*Point.X, 1f, BaseMapTip.TipSize*Point.Y);
         }
 
     }
