@@ -26,7 +26,7 @@ namespace Script.Items
         public override void Use(BaseCharacterParameter parameter)
         {
             parameter.Hp += _hpValue;
-            Destroy(gameObject);
+            Destroy();
         }
     }
 }

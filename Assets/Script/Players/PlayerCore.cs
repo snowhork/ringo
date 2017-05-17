@@ -28,6 +28,11 @@ namespace Script.Players
             set { _point = value; }
         }
 
+        public GameObject GameObject
+        {
+            get { return gameObject; }
+        }
+
         [Inject]
         public void Construct(IMapTipsCore mapTipsCore, BaseCharacterParameter parameter, IBehaviour behaviour, IDamagable damagable)
         {

@@ -9,7 +9,8 @@ namespace Script.Maps
     {
         public const int MapRowsNum = 6;
         public const int MapColsNum = 12;
-        private int _colIndex = 0;
+        private int _colStartIndex = 0;
+        private int _colEndIndex = 0;
         private readonly List<BaseMapTip>[] _mapTipsRows;
 
         public MapTipsCollection()
@@ -23,34 +24,37 @@ namespace Script.Maps
 
         public BaseMapTip GetMapTip(int x, int y)
         {
-            return _mapTipsRows[y][x];
+            Debug.Log("X" + x);
+            Debug.Log(_colStartIndex);
+            return _mapTipsRows[y][x - _colStartIndex];
         }
 
         public bool Enterable(int x, int y)
         {
-            return y >= 0 && y < MapRowsNum && x >= 0 && x < _mapTipsRows[0].Count &&
-                   _mapTipsRows[y][x].Enterable();
+            return y >= 0 && y < MapRowsNum && x >= _colStartIndex && x < _colEndIndex &&
+                   GetMapTip(x, y).Enterable();
         }
 
         public void AppendCol(BaseMapTip[] tips)
         {
             for (var i = 0; i < MapRowsNum; i++)
             {
-                tips[i].Point = new Point(_colIndex, i);
+                tips[i].Point = new Point(_colEndIndex, i);
                 tips[i].SetTransform();
                 _mapTipsRows[i].Add(tips[i]);
             }
-            _colIndex++;
+            _colEndIndex++;
         }
 
         public void RemoveCol()
         {
-            return;
             for (var i = 0; i < MapRowsNum; i++)
             {
-                Object.Destroy(_mapTipsRows[i][0]);
+                var tip = _mapTipsRows[i][0];
+                Object.Destroy(tip);
                 _mapTipsRows[i].RemoveAt(0);
             }
+            _colStartIndex++;
         }
     }
 }

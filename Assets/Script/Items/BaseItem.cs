@@ -23,16 +23,16 @@ namespace Script.Items
             set { _point = value; }
         }
 
+        public GameObject GameObject
+        {
+            get { return gameObject; }
+        }
+
         public abstract void Use(BaseCharacterParameter parameter);
 
         public void SetTransforn()
         {
             transform.position = new Vector3(BaseMapTip.TipSize*Point.X, 1f, BaseMapTip.TipSize*Point.Y);
-        }
-
-        private void OnDestroy()
-        {
-            MapTips.Remove(this);
         }
 
         public void RegisterOnMapTip()
@@ -43,6 +43,12 @@ namespace Script.Items
         public void RemoveFromMapTip()
         {
             MapTips.Remove(this);
+        }
+
+        protected void Destroy()
+        {
+            MapTips.Remove(this);
+            Destroy(gameObject);
         }
     }
 }

@@ -21,10 +21,9 @@ namespace Script.Installers
             Container.Bind<MapTipsFactory>()
                 .To<MapTipsFactory>().AsSingle()
                 .WithArguments(_normalMapTip);
-            Container.Bind<IMapTipsCore>().To<MapTipsCore>().AsSingle().NonLazy();
-            Container.Bind<IMapCreator>().To<MapCreator>().AsSingle().NonLazy();
-            Container.Bind<IMapTipsCollection>().To<MapTipsCollection>().AsSingle().NonLazy();
-
+            Container.Bind<IMapTipsCore>().To<MapTipsCore>().AsSingle();
+            Container.Bind<IMapCreator>().To<MapCreator>().AsSingle();
+            Container.Bind<IMapTipsCollection>().To<MapTipsCollection>().AsSingle();
 
             foreach (var portion in _portions)
             {
@@ -33,7 +32,7 @@ namespace Script.Installers
                     .AsTransient()
                     .WithArguments(portion);
             }
-            Container.Bind<IItemSpawner>().To<ItemSpawner>().AsSingle().NonLazy();
+            Container.Bind<IItemSpawner>().To<ItemSpawner>().AsSingle();
 
             Container.Bind<IItemGetter>().To<PlayerItemGetter>().AsTransient();
             Container.Bind<IMoveInput>().To<PlayerMoveInput>().AsTransient();
@@ -43,6 +42,8 @@ namespace Script.Installers
             Container.Bind<IMover>().To<PlayerMover>().AsTransient();
             Container.Bind<IDamagable>().To<PlayerDamager>().AsTransient();
             Container.Bind<IPlayer>().FromComponentInNewPrefab(_player).AsSingle().NonLazy();
+
+            Container.Bind<MainLoop>().AsSingle().NonLazy();
         }
     }
 }

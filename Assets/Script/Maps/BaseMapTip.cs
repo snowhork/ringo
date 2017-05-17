@@ -14,10 +14,12 @@ namespace Script.Maps
 		protected ICreature _creature;
 		protected IPlayer _player;
 
-		public BaseMapTip Initialize(Point point)
+		private void OnDestroy()
 		{
-			_point = point;
-			return this;
+			if(_item != null) Destroy(_item.GameObject);
+			if(_creature != null) Destroy(_creature.GameObject);
+			if(_player != null) Destroy(_player.GameObject);
+			Destroy(gameObject);
 		}
 
 		public IItem Item
@@ -39,6 +41,11 @@ namespace Script.Maps
 		{
 			get { return _point; }
 			set { _point = value;  }
+		}
+
+		public GameObject GameObject
+		{
+			get { return gameObject; }
 		}
 
 		public void Register(IItem item)

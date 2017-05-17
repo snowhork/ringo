@@ -14,6 +14,11 @@ namespace Script.Items
             _factories = factories;
 
             // for Debug
+
+        }
+
+        public void Spawn()
+        {
             Point[] points0 =
             {
                 new Point(1, 1), new Point(2, 2), new Point(3, 3)
@@ -33,11 +38,6 @@ namespace Script.Items
                 var item = _factories[1].Create(point);
                 item.SetTransforn();
             }
-        }
-
-        public void Spawn()
-        {
-
         }
     }
 }

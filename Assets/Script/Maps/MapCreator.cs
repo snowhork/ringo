@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Script.Factories;
+using UnityEngine;
 
 namespace Script.Maps
 {
@@ -15,19 +16,27 @@ namespace Script.Maps
 
             for (var j = 0; j < 12; j++)
             {
-                var tips = new[]
-                {
-                    _factories[0].Create(),
-                    _factories[0].Create(),
-                    _factories[0].Create(),
-                    _factories[0].Create(),
-                    _factories[0].Create(),
-                    _factories[0].Create(),
-                };
-
-                _collection.AppendCol(tips);
+                CreateCol();
             }
+        }
 
+        public void CreateCol()
+        {
+            var tips = new[]
+            {
+                _factories[0].Create(),
+                _factories[0].Create(),
+                _factories[0].Create(),
+                _factories[0].Create(),
+                _factories[0].Create(),
+                _factories[0].Create(),
+            };
+            _collection.AppendCol(tips);
+        }
+
+        public void RemoveCol()
+        {
+            _collection.RemoveCol();
         }
     }
 }
