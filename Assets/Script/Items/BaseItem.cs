@@ -25,11 +25,6 @@ namespace Script.Items
 
         public abstract void Use(BaseCharacterParameter parameter);
 
-        public void Initialize(Point point)
-        {
-            _point = point;
-        }
-
         public void SetTransforn()
         {
             transform.position = new Vector3(BaseMapTip.TipSize*Point.X, 1f, BaseMapTip.TipSize*Point.Y);
