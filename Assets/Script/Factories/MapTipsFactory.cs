@@ -23,12 +23,4 @@ namespace Script.Factories
             return positionbale;
         }
     }
-
-    public class MapTipsFactory<T> : MapTipsFactory
-        where  T : BaseMapTip
-    {
-        public MapTipsFactory(GameObject mapTip, DiContainer container) : base(mapTip, container)
-        {
-        }
-    }
 }

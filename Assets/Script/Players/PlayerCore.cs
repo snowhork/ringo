@@ -43,7 +43,7 @@ namespace Script.Players
                 .Subscribe(_ =>
                 {
                     _point = new Point(0,0);
-                    _mapTipsCore.GetMapTip(Point).Register(this);
+                    _mapTipsCore.Register(this);
                     SetTransform();
                 });
         }
@@ -70,12 +70,12 @@ namespace Script.Players
 
         public void RegisterOnMapTip()
         {
-            _mapTipsCore.GetMapTip(Point).Register(this);
+            _mapTipsCore.Register(this);
         }
 
         public void RemoveFromMapTip()
         {
-            _mapTipsCore.GetMapTip(Point).Remove(this);
+            _mapTipsCore.Remove(this);
         }
     }
 }

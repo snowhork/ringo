@@ -17,12 +17,7 @@ namespace Script.Maps
             _mapTipsCollection = new MapTipsCollection(factories);
         }
 
-        public BaseMapTip GetMapTip(int x, int y)
-        {
-            return _mapTipsCollection.GetMapTip(x, y);
-        }
-
-        public BaseMapTip GetMapTip(Point point)
+        private BaseMapTip GetMapTip(Point point)
         {
             return _mapTipsCollection.GetMapTip(point.X, point.Y);
         }
@@ -45,6 +40,36 @@ namespace Script.Maps
         public ICreature GetCreature(Point point)
         {
             return GetMapTip(point).Creature;
+        }
+
+        public void Register(IItem registrable)
+        {
+            GetMapTip(registrable.Point).Register(registrable);
+        }
+
+        public void Register(ICreature registrable)
+        {
+            GetMapTip(registrable.Point).Register(registrable);
+        }
+
+        public void Register(IPlayer registrable)
+        {
+            GetMapTip(registrable.Point).Register(registrable);
+        }
+
+        public void Remove(IItem registrable)
+        {
+            GetMapTip(registrable.Point).Remove(registrable);
+        }
+
+        public void Remove(ICreature registrable)
+        {
+            GetMapTip(registrable.Point).Remove(registrable);
+        }
+
+        public void Remove(IPlayer registrable)
+        {
+            GetMapTip(registrable.Point).Remove(registrable);
         }
     }
 }

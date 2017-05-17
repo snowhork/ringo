@@ -25,13 +25,4 @@ namespace Script.Factories
             return registable;
         }
     }
-
-    public class RegistablesFactory<TBase, T> : RegistablesFactory<TBase>
-        where  T : TBase
-        where TBase : Object, IRegistable
-    {
-        public RegistablesFactory(GameObject registable, DiContainer container) : base(registable, container)
-        {
-        }
-    }
 }

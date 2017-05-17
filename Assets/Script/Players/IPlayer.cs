@@ -1,6 +1,5 @@
 ﻿using Script.Damages;
 using Script.Maps;
-using Script.Postions;
 using UnityEngine;
 
 namespace Script.Players

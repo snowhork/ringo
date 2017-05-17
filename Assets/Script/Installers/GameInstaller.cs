@@ -30,7 +30,6 @@ namespace Script.Installers
                     .AsTransient()
                     .WithArguments(portion);
             }
-
             Container.Bind<IItemSpawner>().To<ItemSpawner>().AsSingle().NonLazy();
 
             Container.Bind<IItemGetter>().To<PlayerItemGetter>().AsTransient();

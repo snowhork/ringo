@@ -1,9 +1,6 @@
 ﻿using Script.Characters;
 using Script.Maps;
-using Script.Players;
 using Script.Postions;
-using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
 using Zenject;
 
@@ -40,17 +37,17 @@ namespace Script.Items
 
         private void OnDestroy()
         {
-            MapTips.GetMapTip(Point).Remove(this);
+            MapTips.Remove(this);
         }
 
         public void RegisterOnMapTip()
         {
-            MapTips.GetMapTip(Point).Register(this);
+            MapTips.Register(this);
         }
 
         public void RemoveFromMapTip()
         {
-            MapTips.GetMapTip(Point).Remove(this);
+            MapTips.Remove(this);
         }
     }
 }
