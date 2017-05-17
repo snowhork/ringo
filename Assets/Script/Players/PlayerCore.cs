@@ -1,5 +1,7 @@
 ﻿using System;
 using Script.Attackers;
+using Script.Characters;
+using Script.Damages;
 using Script.Maps;
 using Script.Postions;
 using UniRx;
@@ -9,14 +11,14 @@ using Zenject;
 
 namespace Script.Players
 {
-    [RequireComponent(typeof(PlayerParameter), typeof(PlayerBehaviour), typeof(PlayerDamager))]
     public class PlayerCore : MonoBehaviour, IPlayer
     {
-        [Inject] private MapTipsCore _mapTips;
+        private IMapTipsCore _mapTipsCore;
 
-        private PlayerParameter _parameter;
-        private PlayerBehaviour _behaviour;
-        private PlayerDamager _damager;
+        [SerializeField]
+        private BaseCharacterParameter _parameter;
+        private IBehaviour _behaviour;
+        private IDamagable _damagable;
 
         private Point _point;
 
@@ -26,23 +28,24 @@ namespace Script.Players
             set { _point = value; }
         }
 
+        [Inject]
+        public void Construct(IMapTipsCore mapTipsCore, BaseCharacterParameter parameter, IBehaviour behaviour, IDamagable damagable)
+        {
+            _parameter = parameter;
+            _behaviour = behaviour;
+            _damagable = damagable;
+            _mapTipsCore = mapTipsCore;
+        }
+
         private void Start()
         {
-            _parameter = GetComponent<PlayerParameter>();
-            _behaviour = GetComponent<PlayerBehaviour>();
-            _damager = GetComponent<PlayerDamager>();
             this.UpdateAsObservable().Take(1)
                 .Subscribe(_ =>
                 {
                     _point = new Point(0,0);
-                    _mapTips.GetMapTip(Point).Register(this);
-                    SetTransforn();
+                    _mapTipsCore.GetMapTip(Point).Register(this);
+                    SetTransform();
                 });
-        }
-
-        private void Update()
-        {
-            _behaviour.Execute();
         }
 
         public Transform Transform
@@ -52,13 +55,27 @@ namespace Script.Players
 
         public void Damage(IAttacker attacker)
         {
-            _damager.Execute(attacker);
+            _damagable.Damage(attacker);
         }
 
-        public void SetTransforn()
+        public void SetTransform()
         {
             transform.position = new Vector3(BaseMapTip.TipSize*Point.X, 1f, BaseMapTip.TipSize*Point.Y);
         }
 
+        private void Update()
+        {
+            _behaviour.Execute();
+        }
+
+        public void RegisterOnMapTip()
+        {
+            _mapTipsCore.GetMapTip(Point).Register(this);
+        }
+
+        public void RemoveFromMapTip()
+        {
+            _mapTipsCore.GetMapTip(Point).Remove(this);
+        }
     }
 }

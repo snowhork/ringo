@@ -1,4 +1,5 @@
-﻿using Script.Maps;
+﻿using Script.Characters;
+using Script.Maps;
 using Script.Players;
 using Script.Postions;
 using UniRx;
@@ -11,7 +12,13 @@ namespace Script.Items
     public abstract class BaseItem : MonoBehaviour, IItem
     {
         protected Point _point;
-        [Inject] protected MapTipsCore MapTips;
+        protected IMapTipsCore MapTips;
+
+        [Inject]
+        public void Construct(IMapTipsCore mapTipsCore)
+        {
+            MapTips = mapTipsCore;
+        }
 
         public Point Point
         {
@@ -19,14 +26,12 @@ namespace Script.Items
             set { _point = value; }
         }
 
-        public abstract void Use(PlayerParameter parameter);
+        public abstract void Use(BaseCharacterParameter parameter);
 
         public void Initialize(Point point)
         {
             _point = point;
         }
-
-        private IObservable<Unit> _firstObservable;
 
         public void SetTransforn()
         {
@@ -34,6 +39,16 @@ namespace Script.Items
         }
 
         private void OnDestroy()
+        {
+            MapTips.GetMapTip(Point).Remove(this);
+        }
+
+        public void RegisterOnMapTip()
+        {
+            MapTips.GetMapTip(Point).Register(this);
+        }
+
+        public void RemoveFromMapTip()
         {
             MapTips.GetMapTip(Point).Remove(this);
         }

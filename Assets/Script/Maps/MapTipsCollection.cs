@@ -1,17 +1,23 @@
 ﻿using System.Collections.Generic;
+using Script.Factories;
 using Script.Postions;
-using UnityEngine;
 
 namespace Script.Maps
 {
-    public class MapTipsCollection : MonoBehaviour
+    public class MapTipsCollection
     {
         public const int MapRowsNum = 6;
         public const int MapColsNum = 12;
         private List<BaseMapTip>[] _mapTipsRows;
-        [SerializeField] private BaseMapTip[] _mapTipPref;
+        private readonly List<MapTipsFactory> _factories;
 
-        private void Awake()
+        public MapTipsCollection(List<MapTipsFactory> factories)
+        {
+            _factories = factories;
+            MapTipsInitialize();
+        }
+
+        private void MapTipsInitialize()
         {
             _mapTipsRows = new List<BaseMapTip>[MapRowsNum];
             for (var i = 0; i < MapRowsNum; i++)
@@ -19,7 +25,7 @@ namespace Script.Maps
                 _mapTipsRows[i] = new List<BaseMapTip>();
                 for (var j = 0; j < MapColsNum; j++)
                 {
-                    var tip = Instantiate(_mapTipPref[0]).Initialize(new Point(j, i));
+                    var tip = _factories[0].Create(new Point(j, i));
                     tip.SetTransforn();
                     _mapTipsRows[i].Add(tip);
                 }

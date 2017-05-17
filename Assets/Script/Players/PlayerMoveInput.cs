@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Script.Players
 {
-    public class PlayerInput
+    public class PlayerMoveInput : IMoveInput
     {
         public Point MoveInput()
         {

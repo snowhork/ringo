@@ -1,62 +1,67 @@
-﻿using Script.Maps;
+﻿using Script.Attackers;
+using Script.Characters;
+using Script.Maps;
 using Script.Postions;
 using UnityEngine;
 using Zenject;
 
 namespace Script.Players
 {
-    [RequireComponent(typeof(PlayerParameter), typeof(PlayerMover), typeof(IPlayer))]
-    public class PlayerBehaviour : MonoBehaviour
+    public class PlayerBehaviour : IBehaviour
     {
-        private PlayerItemGetter _getter;
-        private PlayerAttacker _attacker;
-        private PlayerInput _input;
+        private readonly BaseCharacterParameter _parameter;
+        private readonly IPlayer _player;
+        private readonly IMapTipsCore _mapTipsCore;
 
-        private PlayerParameter _parameter;
-        private PlayerMover _mover;
-        private IPlayer _player;
-        [Inject] private MapTipsCore _mapTips;
+        private readonly IItemGetter _getter;
+        private readonly IAttacker _attacker;
+        private readonly IMoveInput _moveInput;
+        private readonly IMover _mover;
 
-        private void Start()
+        public PlayerBehaviour(
+            BaseCharacterParameter parameter,
+            IPlayer player,
+            IMapTipsCore mapTipsCore,
+            IItemGetter getter,
+            IAttacker attacker,
+            IMoveInput moveInput,
+            IMover mover)
         {
-            _mover = GetComponent<PlayerMover>();
-            _player = GetComponent<IPlayer>();
-            _parameter = GetComponent<PlayerParameter>();
-
-            _attacker = new PlayerAttacker(_parameter);
-            _getter = new PlayerItemGetter(_parameter);
-            _input = new PlayerInput();
+            _parameter = parameter;
+            _player = player;
+            _mapTipsCore = mapTipsCore;
+            _getter = getter;
+            _attacker = attacker;
+            _moveInput = moveInput;
+            _mover = mover;
         }
 
         public void Execute()
         {
-            var inputMove = _input.MoveInput();
+            var inputMove = _moveInput.MoveInput();
+            if (inputMove == Point.Zero()) return;
 
-            if (inputMove != Point.Zero())
+            var nextPoint = _player.Point + inputMove;
+            if(!_mapTipsCore.EnterableMapTip(nextPoint)) return;
+
+            var player   = _mapTipsCore.GetPlayer(nextPoint);
+            var creature = _mapTipsCore.GetCreature(nextPoint);
+            var item     = _mapTipsCore.GetItem(nextPoint);
+
+            if (player != null) return;
+            if (creature != null)
             {
-                var nextPoint = _player.Point + inputMove;
-                if(!_mapTips.EnterableMapTip(nextPoint)) return;
-
-                var player   = _mapTips.GetPlayer(nextPoint);
-                var creature = _mapTips.GetCreature(nextPoint);
-                var item     = _mapTips.GetItem(nextPoint);
-
-                if (player != null) return;
-                if (creature != null)
-                {
-                    _attacker.Execute(creature);
-                    return;
-                }
-                if (item != null)
-                {
-                    _getter.Execute(item);
-                }
-                _mover.Execute(inputMove);
-
-                _player.Transform.position += new Vector3(inputMove.X * MapTipsCore.TipSize, 0,
-                    inputMove.Y * MapTipsCore.TipSize);
-
+                _attacker.Execute(creature);
+                return;
             }
+            if (item != null)
+            {
+                _getter.Execute(item);
+            }
+            _mover.Execute(inputMove);
+
+            _player.Transform.position += new Vector3(inputMove.X * MapTipsCore.TipSize, 0,
+                inputMove.Y * MapTipsCore.TipSize);
         }
     }
 }

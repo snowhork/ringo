@@ -1,12 +1,13 @@
-﻿using Script.Items;
+﻿using Script.Characters;
+using Script.Items;
 
 namespace Script.Players
 {
-    public class PlayerItemGetter
+    public class PlayerItemGetter : IItemGetter
     {
-        private readonly PlayerParameter _parameter;
+        private readonly BaseCharacterParameter _parameter;
 
-        public PlayerItemGetter(PlayerParameter parameter)
+        public PlayerItemGetter(BaseCharacterParameter parameter)
         {
             _parameter = parameter;
         }

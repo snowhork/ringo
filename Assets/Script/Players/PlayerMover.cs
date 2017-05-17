@@ -1,28 +1,25 @@
-﻿using Script.Maps;
+﻿using Script.Characters;
+using Script.Maps;
 using Script.Postions;
 using UnityEngine;
 using Zenject;
 
 namespace Script.Players
 {
-    public class PlayerMover : MonoBehaviour
+    public class PlayerMover : IMover
     {
-        [Inject] private MapTipsCore _mapTips;
-        private IPlayer _player;
+        private readonly IPlayer _player;
 
-        private void Start()
+        private PlayerMover(IPlayer player)
         {
-            _player = GetComponent<IPlayer>();
+            _player = player;
         }
 
         public void Execute(Point point)
         {
-            var currentMapTip = _mapTips.GetMapTip(_player.Point);
-
-            currentMapTip.Remove(_player);
+            _player.RemoveFromMapTip();
             _player.Point += point;
-            var nextMapTip = _mapTips.GetMapTip(_player.Point);
-            nextMapTip.Register(_player);
+            _player.RegisterOnMapTip();
         }
     }
 }

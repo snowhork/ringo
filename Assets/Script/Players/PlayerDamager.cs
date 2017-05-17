@@ -1,19 +1,25 @@
 ﻿using Script.Attackers;
+using Script.Characters;
+using Script.Damages;
 using UnityEngine;
 
 namespace Script.Players
 {
-    [RequireComponent(typeof(PlayerDamager))]
-    public class PlayerDamager : MonoBehaviour
+    public class PlayerDamager : IDamagable
     {
-        private PlayerParameter _parameter;
+        private BaseCharacterParameter _parameter;
 
-        private void Start()
+        public PlayerDamager(BaseCharacterParameter parameter)
         {
-            _parameter = GetComponent<PlayerParameter>();
+            _parameter = parameter;
         }
 
         public void Execute(IAttacker attacker)
+        {
+
+        }
+
+        public void Damage(IAttacker attacker)
         {
 
         }

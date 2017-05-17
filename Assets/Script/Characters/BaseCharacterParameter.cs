@@ -2,7 +2,8 @@
 
 namespace Script.Characters
 {
-    public class BaseCharacterParameter : MonoBehaviour
+    [System.Serializable]
+    public class BaseCharacterParameter
     {
         [SerializeField] private int _hp;
         [SerializeField] private int _maxHp;

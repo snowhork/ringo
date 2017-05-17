@@ -1,20 +1,22 @@
 ﻿using Script.Creatures;
 using Script.Attackers;
+using Script.Characters;
+using Script.Damages;
 
 namespace Script.Players
 {
     public class PlayerAttacker : IAttacker
     {
-        public PlayerAttacker(PlayerParameter parameter)
+        public PlayerAttacker(BaseCharacterParameter parameter)
         {
             _parameter = parameter;
         }
 
-        private PlayerParameter _parameter;
+        private BaseCharacterParameter _parameter;
 
-        public void Execute(ICreature creature)
+        public void Execute(IDamagable damagable)
         {
-           creature.Damage(this);
+           damagable.Damage(this);
         }
     }
 }

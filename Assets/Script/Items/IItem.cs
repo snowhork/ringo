@@ -1,10 +1,11 @@
-﻿using Script.Players;
+﻿using Script.Characters;
+using Script.Maps;
 using Script.Postions;
 
 namespace Script.Items
 {
-    public interface IItem : IPositionable
+    public interface IItem : IRegistable
     {
-        void Use(PlayerParameter parameter);
+        void Use(BaseCharacterParameter parameter);
     }
 }

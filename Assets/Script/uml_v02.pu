@@ -1,0 +1,193 @@
+class Point<<struct>> {
+  int X
+  int Y
+}
+
+interface IPositionable {
+  Point Point { get; }
+}
+
+
+abstract BaseCharacterCore <<MonoBehaviour>> {
+
+}
+
+abstract BaseCharacterBehaviour <<MonoBehaviour>> {
+
+}
+
+abstract BaseCharacterParameter {
+
+}
+
+abstract BaseCharacterDamager <<MonoBehaviour>> {
+
+}
+
+interface ICharacter {
+  GameObject GameObject;
+}
+
+
+
+BaseCharacterCore --> BaseCharacterBehaviour
+BaseCharacterCore --> BaseCharacterParameter
+BaseCharacterCore --> BaseCharacterDamager
+BaseCharacterCore --|> ICharacter
+BaseCharacterCore --> MapTipsCore
+
+BaseCharacterBehaviour --> BaseCharacterParameter
+BaseCharacterBehaviour --> MapTipsCore
+BaseCharacterBehaviour --> ICharacter
+
+BaseCharacterDamager --> BaseCharacterParameter
+
+
+
+
+class PlayerParameter {
+
+}
+
+
+abstract class BaseMapTip {
+  void Register(ICharacter)
+  void Register(IItem)
+  void Remove(ICharacter)
+  void Remove(IItem)
+  bool Enterable
+
+  ICharacter Character
+  IItem Item
+  Point Point
+}
+
+class MapTipsCore<<MonoBehaviour>> {
+   IItem GetItem(Point point)
+   ICharacter GetCharacter(Point point)
+   bool EnterableMapTip(Point point)
+}
+
+class MapTipsCollections {
+
+}
+
+class PlayerCore<<MonoBehaviour>> {
+
+}
+
+
+class PlayerInput {
+
+}
+
+class PlayerDamager {
+  PlayerParameter _parameter
+  void Execute(IAttacker)
+}
+
+BaseMapTip --|> IPositionable
+NormalMapTip --|> BaseMapTip
+PlayerParameter --> Weapon
+
+PlayerCore --|> BaseCharacterCore
+PlayerCore --> PlayerBehaviour
+PlayerCore --> PlayerParameter
+PlayerCore --> PlayerDamager
+
+PlayerBehaviour --|> BaseCharacterBehaviour
+PlayerBehaviour --> PlayerAttacker
+PlayerBehaviour --> PlayerItemGetter
+PlayerBehaviour --> PlayerInput
+PlayerBehaviour --> PlayerMover
+
+PlayerMover --> MapTipsCore
+
+PlayerAttacker --|> IAttacker
+PlayerAttacker --> PlayerParameter
+
+PlayerParameter --|> BaseCharacterParameter
+
+PlayerDamager --|> BaseCharacterDamager
+PlayerDamager --> PlayerParameter
+
+MapTipsCore --> MapTipsCollections
+
+MapTipsCollections --> BaseMapTip
+
+IPositionable --> Point
+
+
+
+interface IAttacker {
+
+}
+
+
+
+abstract class BaseCharacterParameter {
+  int Hp { get; set; }
+  int MaxHp { get; set; }
+  int Attack { get; set; }
+  float Speed { get; set;}
+}
+
+abstract class BaseItem<<MonoBehaviour>> {
+  void Initialize(Point)
+}
+
+class Weapon {
+
+}
+
+Weapon --|> BaseItem
+
+class Portion {
+
+}
+
+Portion --|> BaseItem
+
+
+interface IItem {
+  void Use(PlayerParameter)
+
+}
+
+class PlayerBehaviour {
+
+}
+
+class PlayerAttacker {
+  PlayerParameter _parameter
+  Execute()
+}
+
+class PlayerItemGetter {
+  PlayerParameter _parameter
+}
+
+
+BaseItem --|> IItem
+BaseItem --> MapTipsCore
+
+IItem --|> IPositionable
+IItem --> PlayerParameter
+
+BaseMapTip --> IItem
+BaseMapTip --> ICharacter
+
+
+ICharacter --|> IDamagable
+IDamagable --|> IAttacker
+
+interface IDamagable {
+  void Damage()
+}
+
+ICharacter --|> IPositionable
+
+IAttacker --> ICharacter
+
+PlayerItemGetter --> IItem
+PlayerItemGetter --> PlayerParameter

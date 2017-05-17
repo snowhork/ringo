@@ -1,20 +1,20 @@
-﻿using Script.Creatures;
+﻿using System.Collections.Generic;
+using Script.Creatures;
+using Script.Factories;
 using Script.Items;
 using Script.Players;
 using Script.Postions;
-using UnityEngine;
 
 namespace Script.Maps
 {
-    [RequireComponent(typeof(MapTipsCollection))]
-    public class MapTipsCore : MonoBehaviour
+    public class MapTipsCore : IMapTipsCore
     {
         public const float TipSize = 1f;
-        private MapTipsCollection _mapTipsCollection;
+        private readonly MapTipsCollection _mapTipsCollection;
 
-        private void Start()
+        private MapTipsCore(List<MapTipsFactory> factories)
         {
-            _mapTipsCollection = GetComponent<MapTipsCollection>();
+            _mapTipsCollection = new MapTipsCollection(factories);
         }
 
         public BaseMapTip GetMapTip(int x, int y)
