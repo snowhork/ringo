@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Script.Creatures;
-using Script.Factories;
+﻿using Script.Creatures;
 using Script.Items;
 using Script.Players;
 using Script.Postions;
@@ -10,11 +8,11 @@ namespace Script.Maps
     public class MapTipsCore : IMapTipsCore
     {
         public const float TipSize = 1f;
-        private readonly MapTipsCollection _mapTipsCollection;
+        private readonly IMapTipsCollection _mapTipsCollection;
 
-        private MapTipsCore(List<MapTipsFactory> factories)
+        private MapTipsCore(IMapTipsCollection mapTipsCollection)
         {
-            _mapTipsCollection = new MapTipsCollection(factories);
+            _mapTipsCollection = mapTipsCollection;
         }
 
         private BaseMapTip GetMapTip(Point point)

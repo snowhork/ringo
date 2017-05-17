@@ -1,8 +1,5 @@
 ﻿using Script.Characters;
-using Script.Maps;
 using Script.Postions;
-using UnityEngine;
-using Zenject;
 
 namespace Script.Players
 {

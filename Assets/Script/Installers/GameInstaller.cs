@@ -21,7 +21,10 @@ namespace Script.Installers
             Container.Bind<MapTipsFactory>()
                 .To<MapTipsFactory>().AsSingle()
                 .WithArguments(_normalMapTip);
-            Container.Bind<IMapTipsCore>().To<MapTipsCore>().AsSingle();
+            Container.Bind<IMapTipsCore>().To<MapTipsCore>().AsSingle().NonLazy();
+            Container.Bind<IMapCreator>().To<MapCreator>().AsSingle().NonLazy();
+            Container.Bind<IMapTipsCollection>().To<MapTipsCollection>().AsSingle().NonLazy();
+
 
             foreach (var portion in _portions)
             {

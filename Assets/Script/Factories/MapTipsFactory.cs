@@ -1,11 +1,10 @@
 ﻿using Script.Maps;
-using Script.Postions;
 using UnityEngine;
 using Zenject;
 
 namespace Script.Factories
 {
-    public class MapTipsFactory : IFactory<Point, BaseMapTip>
+    public class MapTipsFactory : IFactory<BaseMapTip>
     {
         private readonly GameObject _mapTip;
         private readonly DiContainer _container;
@@ -16,11 +15,9 @@ namespace Script.Factories
             _container = container;
         }
 
-        public BaseMapTip Create(Point point)
+        public BaseMapTip Create()
         {
-            var positionbale =  _container.InstantiatePrefabForComponent<BaseMapTip>(_mapTip);
-            positionbale.Point = point;
-            return positionbale;
+            return  _container.InstantiatePrefabForComponent<BaseMapTip>(_mapTip);
         }
     }
 }

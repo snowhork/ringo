@@ -19,7 +19,7 @@ namespace Script.Items
 //                {
 //                    _point = new Point(Random.Range(0, 10), Random.Range(0, 5));
 //                    MapTips.GetMapTip(Point).Register(this);
-//                    SetTransforn();
+//                    SetTransform();
 //                });
         }
 

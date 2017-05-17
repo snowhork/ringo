@@ -74,7 +74,7 @@ namespace Script.Maps
 			_player = null;
 		}
 
-		public void SetTransforn()
+		public void SetTransform()
 		{
 			transform.position = new Vector3(TipSize*Point.X, 0, TipSize*Point.Y);
 		}

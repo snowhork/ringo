@@ -1,34 +1,23 @@
 ﻿using System.Collections.Generic;
 using Script.Factories;
 using Script.Postions;
+using UnityEngine;
 
 namespace Script.Maps
 {
-    public class MapTipsCollection
+    public class MapTipsCollection : IMapTipsCollection
     {
         public const int MapRowsNum = 6;
         public const int MapColsNum = 12;
-        private List<BaseMapTip>[] _mapTipsRows;
-        private readonly List<MapTipsFactory> _factories;
+        private int _colIndex = 0;
+        private readonly List<BaseMapTip>[] _mapTipsRows;
 
-        public MapTipsCollection(List<MapTipsFactory> factories)
-        {
-            _factories = factories;
-            MapTipsInitialize();
-        }
-
-        private void MapTipsInitialize()
+        public MapTipsCollection()
         {
             _mapTipsRows = new List<BaseMapTip>[MapRowsNum];
             for (var i = 0; i < MapRowsNum; i++)
             {
                 _mapTipsRows[i] = new List<BaseMapTip>();
-                for (var j = 0; j < MapColsNum; j++)
-                {
-                    var tip = _factories[0].Create(new Point(j, i));
-                    tip.SetTransforn();
-                    _mapTipsRows[i].Add(tip);
-                }
             }
         }
 
@@ -39,8 +28,29 @@ namespace Script.Maps
 
         public bool Enterable(int x, int y)
         {
-            return y >= 0 && y < MapRowsNum && x >= 0 && x < MapColsNum &&
+            return y >= 0 && y < MapRowsNum && x >= 0 && x < _mapTipsRows[0].Count &&
                    _mapTipsRows[y][x].Enterable();
+        }
+
+        public void AppendCol(BaseMapTip[] tips)
+        {
+            for (var i = 0; i < MapRowsNum; i++)
+            {
+                tips[i].Point = new Point(_colIndex, i);
+                tips[i].SetTransform();
+                _mapTipsRows[i].Add(tips[i]);
+            }
+            _colIndex++;
+        }
+
+        public void RemoveCol()
+        {
+            return;
+            for (var i = 0; i < MapRowsNum; i++)
+            {
+                Object.Destroy(_mapTipsRows[i][0]);
+                _mapTipsRows[i].RemoveAt(0);
+            }
         }
     }
 }
