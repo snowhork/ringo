@@ -43,7 +43,9 @@ namespace Script.Installers
             Container.Bind<IDamagable>().To<PlayerDamager>().AsTransient();
             Container.Bind<IPlayer>().FromComponentInNewPrefab(_player).AsSingle().NonLazy();
 
-            Container.Bind<MainLoop>().AsSingle().NonLazy();
+            Container.Bind<ITickable>().To<MainLoop>().AsSingle();
+
+            Container.Bind<Camera>().FromComponentInHierarchy();
         }
     }
 }

@@ -11,18 +11,6 @@ namespace Script.Items
     {
         [SerializeField] private int _hpValue;
 
-
-        private void Start()
-        {
-//            this.UpdateAsObservable().Take(1)
-//                .Subscribe(_ =>
-//                {
-//                    _point = new Point(Random.Range(0, 10), Random.Range(0, 5));
-//                    MapTips.GetMapTip(Point).Register(this);
-//                    SetTransform();
-//                });
-        }
-
         public override void Use(BaseCharacterParameter parameter)
         {
             parameter.Hp += _hpValue;

@@ -13,6 +13,16 @@ namespace Script.Maps
         private int _colEndIndex = 0;
         private readonly List<BaseMapTip>[] _mapTipsRows;
 
+        public int ColStartIndex
+        {
+            get { return _colStartIndex; }
+        }
+
+        public int ColEndIndex
+        {
+            get { return _colEndIndex; }
+        }
+
         public MapTipsCollection()
         {
             _mapTipsRows = new List<BaseMapTip>[MapRowsNum];
@@ -24,8 +34,6 @@ namespace Script.Maps
 
         public BaseMapTip GetMapTip(int x, int y)
         {
-            Debug.Log("X" + x);
-            Debug.Log(_colStartIndex);
             return _mapTipsRows[y][x - _colStartIndex];
         }
 

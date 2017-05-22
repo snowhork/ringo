@@ -6,5 +6,7 @@
         bool Enterable(int x, int y);
         void AppendCol(BaseMapTip[] tip);
         void RemoveCol();
+        int ColStartIndex { get; }
+        int ColEndIndex { get; }
     }
 }

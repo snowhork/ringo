@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Script.Factories;
+using Script.Maps;
 using Script.Postions;
 using UnityEngine;
 
@@ -7,37 +8,22 @@ namespace Script.Items
 {
     public class ItemSpawner : IItemSpawner
     {
+        private readonly IMapTipsCollection _collection;
         private readonly List<RegistablesFactory<BaseItem>> _factories;
 
-        public ItemSpawner(List<RegistablesFactory<BaseItem>> factories)
+        public ItemSpawner(IMapTipsCollection collection, List<RegistablesFactory<BaseItem>> factories)
         {
+            _collection = collection;
             _factories = factories;
-
-            // for Debug
-
         }
 
         public void Spawn()
         {
-            Point[] points0 =
-            {
-                new Point(1, 1), new Point(2, 2), new Point(3, 3)
-            };
-            foreach (var point in points0)
-            {
-                var item = _factories[0].Create(point);
-                item.SetTransforn();
-            }
-
-            Point[] points1 =
-            {
-                new Point(5, 1), new Point(6, 2), new Point(8, 4)
-            };
-            foreach (var point in points1)
-            {
-                var item = _factories[1].Create(point);
-                item.SetTransforn();
-            }
+            var index = Random.Range(0, 2);
+            var point = new Point(Random.Range(_collection.ColStartIndex, _collection.ColEndIndex), Random.Range(0, 6));
+            if(_collection.GetMapTip(point.X, point.Y).Item != null) return;
+            var item = _factories[index].Create(point);
+            item.SetTransforn();
         }
     }
 }

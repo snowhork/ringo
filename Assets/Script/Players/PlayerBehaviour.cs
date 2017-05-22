@@ -60,8 +60,17 @@ namespace Script.Players
             }
             _mover.Execute(inputMove);
 
+            SetRotation(inputMove);
             _player.Transform.position += new Vector3(inputMove.X * MapTipsCore.TipSize, 0,
                 inputMove.Y * MapTipsCore.TipSize);
+        }
+
+        private void SetRotation(Point inputMove)
+        {
+            if(inputMove.X > 0) _player.Transform.rotation = Quaternion.Euler(0, 90, 0);
+            if(inputMove.X < 0) _player.Transform.rotation = Quaternion.Euler(0, -90, 0);
+            if(inputMove.Y > 0) _player.Transform.rotation = Quaternion.Euler(0, 0, 0);
+            if(inputMove.Y < 0) _player.Transform.rotation = Quaternion.Euler(0, 180, 0);
         }
     }
 }

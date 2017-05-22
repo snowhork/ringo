@@ -11,13 +11,15 @@ namespace Script
     {
         private readonly IItemSpawner _itemSpawner;
         private readonly IMapCreator _mapCreator;
+        private readonly Camera _camera;
+        private Vector3 nextCameraPos;
 
-        public MainLoop(IItemSpawner itemSpawner, IMapCreator mapCreator)
+        public MainLoop(IItemSpawner itemSpawner, IMapCreator mapCreator, Camera camera)
         {
+            nextCameraPos = camera.transform.position;
             _itemSpawner = itemSpawner;
             _mapCreator = mapCreator;
-
-            _itemSpawner.Spawn();
+            _camera = camera;
 
             Observable.Interval(TimeSpan.FromSeconds(2f))
                 .Subscribe(_ =>
@@ -29,12 +31,19 @@ namespace Script
                 .Subscribe(_ =>
                 {
                     _mapCreator.RemoveCol();
+                    nextCameraPos += Vector3.right * 1f;
+                });
+
+            Observable.Interval(TimeSpan.FromSeconds(1.25f))
+                .Subscribe(_ =>
+                {
+                    _itemSpawner.Spawn();
                 });
         }
 
         public void Tick()
         {
-            //do nothing.
+            _camera.transform.position = Vector3.Lerp(_camera.transform.position, nextCameraPos, 0.01f);
         }
     }
 }
