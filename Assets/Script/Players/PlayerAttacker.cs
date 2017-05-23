@@ -1,5 +1,4 @@
-﻿using Script.Creatures;
-using Script.Attackers;
+﻿using Script.Attackers;
 using Script.Characters;
 using Script.Damages;
 

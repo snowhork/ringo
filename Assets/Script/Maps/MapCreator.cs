@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Script.Factories;
+using Script.Postions;
 using UnityEngine;
 
 namespace Script.Maps
@@ -7,36 +8,55 @@ namespace Script.Maps
     public class MapCreator : IMapCreator
     {
         private readonly IMapTipsCollection _collection;
-        private readonly List<MapTipsFactory> _factories;
+        private readonly List<MapTipsFactory> _mapTipsFactories;
+        private readonly List<BlocksFactory> _blocksFactories;
 
-        public MapCreator(IMapTipsCollection collection, List<MapTipsFactory> factories)
+        public MapCreator(IMapTipsCollection collection, List<MapTipsFactory> mapTipsFactories, List<BlocksFactory> blocksFactories)
         {
             _collection = collection;
-            _factories = factories;
+            _mapTipsFactories = mapTipsFactories;
+            _blocksFactories = blocksFactories;
+        }
 
-            for (var j = 0; j < 12; j++)
+        public void Initialize()
+        {
+            var tips = new BaseMapTip[MapTipsCollection.MapSizeX, MapTipsCollection.MapSizeY];
+            for (var i = 0; i < tips.GetLength(0); i++)
             {
-                CreateCol();
+                for (var j = 0; j < tips.GetLength(1); j++)
+                {
+                    tips[i, j] = _mapTipsFactories[0].Create(new Point(i, j));
+                }
+            }
+            _collection.Initialize(tips);
+
+            for (var x = 1; x <= MapTipsCollection.MapSizeX - 2; x += 2)
+            {
+                for (var y = 1; y <= MapTipsCollection.MapSizeY - 2; y += 2)
+                {
+                    var tip = _collection.GetMapTip(x, y);
+                    if (tip.Player != null) continue;
+                    if (tip.Block != null) continue;
+                    tip.Register(_blocksFactories[1].Create(tip.Point));
+                }
+            }
+
+            for (var time = 0; time < 20; time++)
+            {
+                var x = Random.Range(0, MapTipsCollection.MapSizeX);
+                var y = Random.Range(0, MapTipsCollection.MapSizeY);
+                var tip = _collection.GetMapTip(x, y);
+                if(tip.Player != null) continue;
+                if(tip.Block != null) continue;
+                tip.Register(_blocksFactories[0].Create(tip.Point));
             }
         }
 
-        public void CreateCol()
+        public void AddBlock()
         {
-            var tips = new[]
-            {
-                _factories[0].Create(),
-                _factories[0].Create(),
-                _factories[0].Create(),
-                _factories[0].Create(),
-                _factories[0].Create(),
-                _factories[0].Create(),
-            };
-            _collection.AppendCol(tips);
+            throw new System.NotImplementedException();
         }
 
-        public void RemoveCol()
-        {
-            _collection.RemoveCol();
-        }
+
     }
 }

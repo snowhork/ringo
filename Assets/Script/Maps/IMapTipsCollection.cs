@@ -1,12 +1,12 @@
-﻿namespace Script.Maps
+﻿using Script.Blocks;
+using Script.Postions;
+
+namespace Script.Maps
 {
     public interface IMapTipsCollection
     {
         BaseMapTip GetMapTip(int x, int y);
         bool Enterable(int x, int y);
-        void AppendCol(BaseMapTip[] tip);
-        void RemoveCol();
-        int ColStartIndex { get; }
-        int ColEndIndex { get; }
+        void Initialize(BaseMapTip[,] mapTips);
     }
 }

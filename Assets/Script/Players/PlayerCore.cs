@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Script.Attackers;
 using Script.Characters;
 using Script.Damages;
@@ -40,6 +41,9 @@ namespace Script.Players
             _behaviour = behaviour;
             _damagable = damagable;
             _mapTipsCore = mapTipsCore;
+//            _point = new Point(0,0);
+//            _mapTipsCore.Register(this);
+//            SetTransform();
         }
 
         private void Start()
@@ -56,6 +60,11 @@ namespace Script.Players
         public Transform Transform
         {
             get { return transform; }
+        }
+
+        public void ExecuteCoroutine(IEnumerator coroutine)
+        {
+            StartCoroutine(coroutine);
         }
 
         public void Damage(IAttacker attacker)

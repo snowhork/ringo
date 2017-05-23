@@ -1,4 +1,6 @@
-﻿using Script.Creatures;
+﻿using Script.Blocks;
+using Script.Bullets;
+using Script.Effect;
 using Script.Items;
 using Script.Players;
 using Script.Postions;
@@ -11,13 +13,14 @@ namespace Script.Maps
 		public const float TipSize = 1f;
 		protected Point _point;
 		protected IItem _item;
-		protected ICreature _creature;
+		protected IBlock _block;
 		protected IPlayer _player;
+		protected IBullet _bullet;
+		protected IEffect _effect;
 
 		private void OnDestroy()
 		{
 			if(_item != null) Destroy(_item.GameObject);
-			if(_creature != null) Destroy(_creature.GameObject);
 			if(_player != null) Destroy(_player.GameObject);
 			Destroy(gameObject);
 		}
@@ -27,14 +30,24 @@ namespace Script.Maps
 			get { return _item; }
 		}
 
-		public ICreature Creature
+		public IBlock Block
 		{
-			get { return _creature; }
+			get { return _block; }
 		}
 
 		public IPlayer Player
 		{
 			get { return _player; }
+		}
+
+		public IEffect Effect
+		{
+			get { return _effect; }
+		}
+
+		public IBullet Bullet
+		{
+			get { return _bullet; }
 		}
 
 		public Point Point
@@ -53,14 +66,24 @@ namespace Script.Maps
 			_item = item;
 		}
 
-		public void Register(ICreature creature)
+		public void Register(IBlock block)
 		{
-			_creature = creature;
+			_block = block;
 		}
 
 		public void Register(IPlayer player)
 		{
 			_player = player;
+		}
+
+		public void Register(IBullet bullet)
+		{
+			_bullet = bullet;
+		}
+
+		public void Register(IEffect effect)
+		{
+			_effect = effect;
 		}
 
 		public void Remove(IItem item)
@@ -69,16 +92,28 @@ namespace Script.Maps
 			_item = null;
 		}
 
-		public void Remove(ICreature creature)
+		public void Remove(IBlock block)
 		{
-			if(creature != _creature) return;
-			_creature = null;
+			if(block != _block) return;
+			_block = null;
 		}
 
 		public void Remove(IPlayer player)
 		{
 			if(player != _player) return;
 			_player = null;
+		}
+
+		public void Remove(IBullet bullet)
+		{
+			if(bullet != _bullet) return;
+			_bullet = null;
+		}
+
+		public void Remove(IEffect effect)
+		{
+			if(effect != _effect) return;
+			_effect = null;
 		}
 
 		public void SetTransform()

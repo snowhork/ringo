@@ -2,7 +2,7 @@
 {
     public interface IMapCreator
     {
-        void CreateCol();
-        void RemoveCol();
+        void Initialize();
+        void AddBlock();
     }
 }

@@ -1,7 +1,9 @@
-﻿using Script.Attackers;
+﻿using System.Collections;
+using Script.Attackers;
 using Script.Characters;
 using Script.Maps;
 using Script.Postions;
+using UnityEditor;
 using UnityEngine;
 using Zenject;
 
@@ -13,64 +15,95 @@ namespace Script.Players
         private readonly IPlayer _player;
         private readonly IMapTipsCore _mapTipsCore;
 
-        private readonly IItemGetter _getter;
-        private readonly IAttacker _attacker;
-        private readonly IMoveInput _moveInput;
+        private readonly PlayerMoveInput _moveInput = new PlayerMoveInput();
+        private readonly PlayerAttackInput _attackInput = new PlayerAttackInput();
         private readonly IMover _mover;
+
+        private bool _isMoving = false;
+        private bool _isAttacking = false;
 
         public PlayerBehaviour(
             BaseCharacterParameter parameter,
             IPlayer player,
             IMapTipsCore mapTipsCore,
-            IItemGetter getter,
-            IAttacker attacker,
-            IMoveInput moveInput,
             IMover mover)
         {
             _parameter = parameter;
             _player = player;
             _mapTipsCore = mapTipsCore;
-            _getter = getter;
-            _attacker = attacker;
-            _moveInput = moveInput;
             _mover = mover;
         }
 
         public void Execute()
         {
-            var inputMove = _moveInput.MoveInput();
-            if (inputMove == Point.Zero()) return;
+            var moveForward = _moveInput.MoveInput();
+            var attackForward = _attackInput.AttackInput();
 
-            var nextPoint = _player.Point + inputMove;
-            if(!_mapTipsCore.EnterableMapTip(nextPoint)) return;
-
-            var player   = _mapTipsCore.GetPlayer(nextPoint);
-            var creature = _mapTipsCore.GetCreature(nextPoint);
-            var item     = _mapTipsCore.GetItem(nextPoint);
-
-            if (player != null) return;
-            if (creature != null)
-            {
-                _attacker.Execute(creature);
-                return;
-            }
-            if (item != null)
-            {
-                _getter.Execute(item);
-            }
-            _mover.Execute(inputMove);
-
-            SetRotation(inputMove);
-            _player.Transform.position += new Vector3(inputMove.X * MapTipsCore.TipSize, 0,
-                inputMove.Y * MapTipsCore.TipSize);
+            if (!(moveForward   == Point.Zero() || _isMoving)) Moving(moveForward);
+            if (!(attackForward == Point.Zero() || _isAttacking )) Attacking(attackForward);
         }
 
-        private void SetRotation(Point inputMove)
+        private void Moving(Point moveForward)
         {
-            if(inputMove.X > 0) _player.Transform.rotation = Quaternion.Euler(0, 90, 0);
-            if(inputMove.X < 0) _player.Transform.rotation = Quaternion.Euler(0, -90, 0);
-            if(inputMove.Y > 0) _player.Transform.rotation = Quaternion.Euler(0, 0, 0);
-            if(inputMove.Y < 0) _player.Transform.rotation = Quaternion.Euler(0, 180, 0);
+            SetRotation(moveForward);
+
+            var nextPoint = _player.Point + moveForward;
+            if (!_mapTipsCore.EnterableMapTip(nextPoint)) return;
+
+            var player = _mapTipsCore.GetPlayer(nextPoint);
+            var block = _mapTipsCore.GetBlock(nextPoint);
+
+            if (player != null) return;
+            if (block != null) return;
+
+            _player.ExecuteCoroutine(MoveCoroutine(moveForward));
+        }
+
+        private void Attacking(Point attackForward)
+        {
+            SetRotation(attackForward);
+            _parameter.CurrentWeapon.Execute(attackForward);
+            _isAttacking = true;
+            _player.ExecuteCoroutine(Charge());
+        }
+
+        private void SetRotation(Point forward)
+        {
+            if(forward.X > 0) _player.Transform.rotation = Quaternion.Euler(0, 90, 0);
+            if(forward.X < 0) _player.Transform.rotation = Quaternion.Euler(0, -90, 0);
+            if(forward.Y > 0) _player.Transform.rotation = Quaternion.Euler(0, 0, 0);
+            if(forward.Y < 0) _player.Transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+
+        private IEnumerator Charge()
+        {
+            yield return new WaitForSeconds(1f);
+            _isAttacking = false;
+        }
+
+        private IEnumerator MoveCoroutine(Point inputMove)
+        {
+            _isMoving = true;
+            var speed = 0.1f;
+            var startPos = _player.Transform.position;
+            var delta = 0f;
+
+            for(; delta <= BaseMapTip.TipSize/2; delta += speed)
+            {
+                _player.Transform.position +=
+                    new Vector3(inputMove.X, 0, inputMove.Y) * speed;
+                yield return null;
+            }
+            _mover.Execute(inputMove);
+            for(; delta <= BaseMapTip.TipSize; delta += speed)
+            {
+                _player.Transform.position +=
+                    new Vector3(inputMove.X, 0, inputMove.Y) * speed;
+                yield return null;
+            }
+
+            _player.Transform.position = startPos + new Vector3(inputMove.X, 0, inputMove.Y) * BaseMapTip.TipSize;
+            _isMoving = false;
         }
     }
 }

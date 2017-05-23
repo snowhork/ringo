@@ -1,10 +1,12 @@
 ﻿using Script.Attackers;
+using Script.Bullets;
 using Script.Characters;
 using Script.Damages;
 using Script.Factories;
 using Script.Items;
 using Script.Maps;
 using Script.Players;
+using Script.Weapons;
 using UnityEngine;
 using Zenject;
 
@@ -15,6 +17,8 @@ namespace Script.Installers
         [SerializeField] private GameObject _player;
         [SerializeField] private GameObject _normalMapTip;
         [SerializeField] private GameObject[] _portions;
+        [SerializeField] private GameObject[] _blocks;
+        [SerializeField] private GameObject _bombBullet;
 
         public override void InstallBindings()
         {
@@ -23,7 +27,7 @@ namespace Script.Installers
                 .WithArguments(_normalMapTip);
             Container.Bind<IMapTipsCore>().To<MapTipsCore>().AsSingle();
             Container.Bind<IMapCreator>().To<MapCreator>().AsSingle();
-            Container.Bind<IMapTipsCollection>().To<MapTipsCollection>().AsSingle();
+            Container.Bind<IMapTipsCollection>().To<MapTipsCollection>().AsSingle().NonLazy();
 
             foreach (var portion in _portions)
             {
@@ -32,10 +36,24 @@ namespace Script.Installers
                     .AsTransient()
                     .WithArguments(portion);
             }
-            Container.Bind<IItemSpawner>().To<ItemSpawner>().AsSingle();
+
+            foreach (var block in _blocks)
+            {
+                Container.Bind<BlocksFactory>()
+                    .AsTransient()
+                    .WithArguments(block);
+            }
+
+            Container.Bind<RegistablesFactory<BombBullet>>()
+                .To<RegistablesFactory<BombBullet>>()
+                .AsSingle()
+                .WithArguments(_bombBullet);
+
+            Container.Bind<IWeapon>()
+                .To<BombWeapon>()
+                .AsTransient();
 
             Container.Bind<IItemGetter>().To<PlayerItemGetter>().AsTransient();
-            Container.Bind<IMoveInput>().To<PlayerMoveInput>().AsTransient();
             Container.Bind<IBehaviour>().To<PlayerBehaviour>().AsTransient();
             Container.Bind<BaseCharacterParameter>().To<PlayerParameter>().AsTransient();
             Container.Bind<IAttacker>().To<PlayerAttacker>().AsTransient();

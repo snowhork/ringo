@@ -1,8 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using Script.Weapons;
+using UnityEngine;
 
 namespace Script.Characters
 {
-    [System.Serializable]
+    [Serializable]
     public class BaseCharacterParameter
     {
         [SerializeField] private int _hp;
@@ -10,13 +13,21 @@ namespace Script.Characters
         [SerializeField] private int _attack;
         [SerializeField] private float _speed;
 
+        private readonly List<IWeapon> _weapons;
+        private IWeapon _currentWeapon;
+
+        public BaseCharacterParameter(List<IWeapon> weapons)
+        {
+            _weapons = weapons;
+            _currentWeapon = _weapons[0];
+        }
+
         public int Hp
         {
             get { return _hp; }
             set
             {
                 _hp = value;
-                Debug.Log(_hp);
             }
         }
 
@@ -36,6 +47,11 @@ namespace Script.Characters
         {
             get { return _speed; }
             set { _speed = value; }
+        }
+
+        public IWeapon CurrentWeapon
+        {
+            get { return _currentWeapon; }
         }
     }
 }
