@@ -2,6 +2,7 @@
 using Script.Bullets;
 using Script.Characters;
 using Script.Damages;
+using Script.Effect;
 using Script.Factories;
 using Script.Items;
 using Script.Maps;
@@ -18,6 +19,7 @@ namespace Script.Installers
         [SerializeField] private GameObject _normalMapTip;
         [SerializeField] private GameObject[] _portions;
         [SerializeField] private GameObject[] _blocks;
+        [SerializeField] private GameObject[] _effects;
         [SerializeField] private GameObject _bombBullet;
 
         public override void InstallBindings()
@@ -52,6 +54,14 @@ namespace Script.Installers
             Container.Bind<IWeapon>()
                 .To<BombWeapon>()
                 .AsTransient();
+
+            foreach (var effect in _effects)
+            {
+                Container.Bind<RegistablesFactory<BaseEffect>>()
+                    .To<RegistablesFactory<BaseEffect>>()
+                    .AsTransient()
+                    .WithArguments(effect);
+            }
 
             Container.Bind<IItemGetter>().To<PlayerItemGetter>().AsTransient();
             Container.Bind<IBehaviour>().To<PlayerBehaviour>().AsTransient();

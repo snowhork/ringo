@@ -1,4 +1,7 @@
-﻿using Script.Maps;
+﻿using System.Collections.Generic;
+using Script.Effect;
+using Script.Factories;
+using Script.Maps;
 using Script.Postions;
 using Script.Weapons;
 using UnityEngine;
@@ -12,6 +15,7 @@ namespace Script.Bullets
         protected IMapTipsCore MapTips;
         private WeaponParameter _parameter;
         private Point _attackForward;
+        protected List<RegistablesFactory<BaseEffect>> Factories;
 
         public Point AttackForward
         {
@@ -26,9 +30,10 @@ namespace Script.Bullets
         }
 
         [Inject]
-        public void Construct(IMapTipsCore mapTips)
+        public void Construct(IMapTipsCore mapTips, List<RegistablesFactory<BaseEffect>> factories)
         {
             MapTips = mapTips;
+            Factories = factories;
         }
 
         public Point Point

@@ -50,6 +50,10 @@ namespace Script.Bullets
             }
             RemoveFromMapTip();
             Destroy(gameObject);
+            if (MapTips.EnterableMapTip(Point))
+            {
+                Factories[0].Create(Point);
+            }
         }
 
         private new bool Move(Point moveForward)
@@ -66,7 +70,6 @@ namespace Script.Bullets
                 block.Hit();
                 return false;
             }
-
             base.Move(moveForward);
             return true;
         }
