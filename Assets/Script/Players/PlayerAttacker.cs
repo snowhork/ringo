@@ -1,6 +1,5 @@
 ﻿using Script.Attackers;
 using Script.Characters;
-using Script.Damages;
 
 namespace Script.Players
 {
@@ -13,9 +12,10 @@ namespace Script.Players
 
         private BaseCharacterParameter _parameter;
 
-        public void Execute(IDamagable damagable)
+
+        public Const.Attribute Attribute
         {
-           damagable.Damage(this);
+            get { return _parameter.Attribute; }
         }
     }
 }

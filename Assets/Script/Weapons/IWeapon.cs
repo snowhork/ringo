@@ -4,7 +4,7 @@ namespace Script.Weapons
 {
     public interface IWeapon
     {
-        void Execute(Point attackForward);
+        void Execute(Point current, Point forward);
         WeaponParameter Parameter { get; }
     }
 }

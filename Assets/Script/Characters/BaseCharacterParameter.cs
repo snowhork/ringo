@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Script.Postions;
 using Script.Weapons;
 using UnityEngine;
 
@@ -12,6 +13,20 @@ namespace Script.Characters
         [SerializeField] private int _maxHp;
         [SerializeField] private int _attack;
         [SerializeField] private float _speed;
+        [SerializeField] private Point _point;
+
+        public Point Point
+        {
+            get { return _point; }
+            set { _point = value; }
+        }
+
+        [SerializeField] private Const.Attribute _attribute = Const.Attribute.Fire;
+
+        public Const.Attribute Attribute
+        {
+            get { return _attribute; }
+        }
 
         private readonly List<IWeapon> _weapons;
         private IWeapon _currentWeapon;

@@ -1,14 +1,13 @@
 ﻿using System.Collections;
-using Script.Damages;
+using Script.Attributes;
+using Script.Hits;
 using Script.Maps;
-using UniRx;
 using UnityEngine;
 
 namespace Script.Players
 {
-    public interface IPlayer : IRegistable, IDamagable
+    public interface IPlayer : IRegistable, IHittable, IAttribute
     {
         Transform Transform { get; }
-        void ExecuteCoroutine(IEnumerator coroutine);
     }
 }

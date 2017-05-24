@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Script.Attackers;
 using Script.Effect;
 using Script.Factories;
 using Script.Maps;
@@ -9,7 +10,7 @@ using Zenject;
 
 namespace Script.Bullets
 {
-    public abstract class BaseBullet : MonoBehaviour, IBullet
+    public abstract class BaseBullet : MonoBehaviour, IBullet, IAttacker
     {
         private Point _point;
         protected IMapTipsCore MapTips;
@@ -73,7 +74,13 @@ namespace Script.Bullets
 
         public void SetTransform()
         {
+
             transform.position = new Vector3(MapTipsCore.TipSize*Point.X, 1f, MapTipsCore.TipSize*Point.Y);
+        }
+
+        public Const.Attribute Attribute
+        {
+            get { return Parameter.Attribute; }
         }
     }
 }

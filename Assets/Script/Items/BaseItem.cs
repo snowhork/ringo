@@ -30,7 +30,7 @@ namespace Script.Items
 
         public abstract void Use(BaseCharacterParameter parameter);
 
-        public void SetTransforn()
+        public void SetTransform()
         {
             transform.position = new Vector3(BaseMapTip.TipSize*Point.X, 1f, BaseMapTip.TipSize*Point.Y);
         }

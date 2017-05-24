@@ -1,9 +1,9 @@
-﻿using Script.Maps;
+﻿using Script.Hits;
+using Script.Maps;
 
 namespace Script.Blocks
 {
-    public interface IBlock : IRegistable
+    public interface IBlock : IRegistable, IHittable
     {
-        bool Hit();
     }
 }

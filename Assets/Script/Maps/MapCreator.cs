@@ -1,21 +1,30 @@
 ﻿using System.Collections.Generic;
 using Script.Factories;
+using Script.Installers;
 using Script.Postions;
 using UnityEngine;
+using Zenject;
 
 namespace Script.Maps
 {
     public class MapCreator : IMapCreator
     {
+        private readonly DiContainer _container;
         private readonly IMapTipsCollection _collection;
         private readonly List<MapTipsFactory> _mapTipsFactories;
         private readonly List<BlocksFactory> _blocksFactories;
+        private readonly PlayersFactory _playersFactory;
 
-        public MapCreator(IMapTipsCollection collection, List<MapTipsFactory> mapTipsFactories, List<BlocksFactory> blocksFactories)
+        public MapCreator(DiContainer container, IMapTipsCollection collection,
+            List<MapTipsFactory> mapTipsFactories,
+            List<BlocksFactory> blocksFactories,
+            PlayersFactory playersFactory)
         {
+            _container = container;
             _collection = collection;
             _mapTipsFactories = mapTipsFactories;
             _blocksFactories = blocksFactories;
+            _playersFactory = playersFactory;
         }
 
         public void Initialize()
@@ -29,6 +38,10 @@ namespace Script.Maps
                 }
             }
             _collection.Initialize(tips);
+
+            _playersFactory.Create(new Point(0, 0));
+
+            //PlayerInstaller.InstallFromResource("Installers/PlayerInstaller", _container);
 
             for (var x = 1; x <= MapTipsCollection.MapSizeX - 2; x += 2)
             {

@@ -2,33 +2,25 @@
 using Script.Factories;
 using Script.Players;
 using Script.Postions;
-using UnityEngine;
 
 namespace Script.Weapons
 {
-    public class BombWeapon : IWeapon
+    public class BombWeapon : BaseWeapon
     {
-        private readonly IPlayer _player;
-        private readonly WeaponParameter _parameter = new WeaponParameter();
+        private readonly WeaponParameter _parameter = new WeaponParameter(Const.Attribute.Fire);
         private readonly RegistablesFactory<BombBullet> _factory;
 
-        public BombWeapon(IPlayer player, RegistablesFactory<BombBullet> factory)
+        public BombWeapon(RegistablesFactory<BombBullet> factory)
         {
-            _player = player;
             _factory = factory;
         }
 
-        public void Execute(Point attackForward)
+        public override void Execute(Point current, Point forward)
         {
-            var bullet = _factory.Create(_player.Point);
+            var bullet = _factory.Create(current);
             bullet.Parameter = _parameter;
-            bullet.AttackForward = attackForward;
+            bullet.AttackForward = forward;
             bullet.Execute();
-        }
-
-        public WeaponParameter Parameter
-        {
-            get { return _parameter; }
         }
     }
 }

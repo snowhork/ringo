@@ -37,7 +37,7 @@ namespace Script.Bullets
                         new Vector3(AttackForward.X, 0, AttackForward.Y) * Speed;
                     yield return null;
                 }
-                if (!Move(AttackForward)) break;
+                if (!MoveProcess(AttackForward)) break;
                 distance++;
                 for (; delta <= BaseMapTip.TipSize; delta += Speed)
                 {
@@ -52,11 +52,12 @@ namespace Script.Bullets
             Destroy(gameObject);
             if (MapTips.EnterableMapTip(Point))
             {
-                Factories[0].Create(Point);
+                var effect = Factories[0].Create(Point);
+                effect.SetTransform();
             }
         }
 
-        private new bool Move(Point moveForward)
+        private bool MoveProcess(Point moveForward)
         {
             var nextPoint = Point + moveForward;
             if (!MapTips.EnterableMapTip(nextPoint)) return false;
@@ -64,13 +65,20 @@ namespace Script.Bullets
             var player = MapTips.GetPlayer(nextPoint);
             var block = MapTips.GetBlock(nextPoint);
 
-            if (player != null) return false;
+            if (player != null)
+            {
+                if (player.Hit(this))
+                {
+                    Move(moveForward);
+                    return false;
+                }
+            }
             if (block != null)
             {
-                block.Hit();
+                if (block.Hit(this)) Move(moveForward);
                 return false;
             }
-            base.Move(moveForward);
+            Move(moveForward);
             return true;
         }
     }

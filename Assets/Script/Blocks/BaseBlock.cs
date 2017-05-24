@@ -1,4 +1,5 @@
-﻿using Script.Maps;
+﻿using Script.Attackers;
+using Script.Maps;
 using Script.Postions;
 using UnityEngine;
 using Zenject;
@@ -42,6 +43,6 @@ namespace Script.Blocks
             transform.position = new Vector3(MapTipsCore.TipSize*Point.X, 1f, MapTipsCore.TipSize*Point.Y);
         }
 
-        public abstract bool Hit();
+        public abstract bool Hit(IAttacker attacker);
     }
 }

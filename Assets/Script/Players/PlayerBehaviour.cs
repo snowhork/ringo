@@ -1,8 +1,10 @@
 ﻿using System.Collections;
+using System.Runtime.Remoting.Metadata;
 using Script.Attackers;
 using Script.Characters;
 using Script.Maps;
 using Script.Postions;
+using UniRx;
 using UnityEditor;
 using UnityEngine;
 using Zenject;
@@ -12,26 +14,26 @@ namespace Script.Players
     public class PlayerBehaviour : IBehaviour
     {
         private readonly BaseCharacterParameter _parameter;
-        private readonly IPlayer _player;
+        private readonly Transform _transform;
         private readonly IMapTipsCore _mapTipsCore;
 
         private readonly PlayerMoveInput _moveInput = new PlayerMoveInput();
         private readonly PlayerAttackInput _attackInput = new PlayerAttackInput();
-        private readonly IMover _mover;
 
         private bool _isMoving = false;
         private bool _isAttacking = false;
 
+        private readonly Subject<Unit> _removeSubject = new Subject<Unit>();
+        private readonly Subject<Unit> _registerSubject = new Subject<Unit>();
+
         public PlayerBehaviour(
             BaseCharacterParameter parameter,
-            IPlayer player,
-            IMapTipsCore mapTipsCore,
-            IMover mover)
+            Transform transform,
+            IMapTipsCore mapTipsCore)
         {
             _parameter = parameter;
-            _player = player;
+            _transform = transform;
             _mapTipsCore = mapTipsCore;
-            _mover = mover;
         }
 
         public void Execute()
@@ -43,11 +45,22 @@ namespace Script.Players
             if (!(attackForward == Point.Zero() || _isAttacking )) Attacking(attackForward);
         }
 
+        public IObservable<Unit> RemoveFromMapTip
+        {
+            get { return _removeSubject; }
+        }
+
+        public IObservable<Unit> RegisterOnMapTip
+        {
+            get { return _registerSubject; }
+        }
+
+
         private void Moving(Point moveForward)
         {
             SetRotation(moveForward);
 
-            var nextPoint = _player.Point + moveForward;
+            var nextPoint = _parameter.Point + moveForward;
             if (!_mapTipsCore.EnterableMapTip(nextPoint)) return;
 
             var player = _mapTipsCore.GetPlayer(nextPoint);
@@ -56,23 +69,23 @@ namespace Script.Players
             if (player != null) return;
             if (block != null) return;
 
-            _player.ExecuteCoroutine(MoveCoroutine(moveForward));
+            Observable.FromCoroutine(_ => MoveCoroutine(moveForward)).Subscribe();
         }
 
         private void Attacking(Point attackForward)
         {
             SetRotation(attackForward);
-            _parameter.CurrentWeapon.Execute(attackForward);
+            _parameter.CurrentWeapon.Execute(_parameter.Point, attackForward);
             _isAttacking = true;
-            _player.ExecuteCoroutine(Charge());
+            Observable.FromCoroutine(Charge).Subscribe();
         }
 
         private void SetRotation(Point forward)
         {
-            if(forward.X > 0) _player.Transform.rotation = Quaternion.Euler(0, 90, 0);
-            if(forward.X < 0) _player.Transform.rotation = Quaternion.Euler(0, -90, 0);
-            if(forward.Y > 0) _player.Transform.rotation = Quaternion.Euler(0, 0, 0);
-            if(forward.Y < 0) _player.Transform.rotation = Quaternion.Euler(0, 180, 0);
+            if(forward.X > 0) _transform.rotation = Quaternion.Euler(0, 90, 0);
+            if(forward.X < 0) _transform.rotation = Quaternion.Euler(0, -90, 0);
+            if(forward.Y > 0) _transform.rotation = Quaternion.Euler(0, 0, 0);
+            if(forward.Y < 0) _transform.rotation = Quaternion.Euler(0, 180, 0);
         }
 
         private IEnumerator Charge()
@@ -85,25 +98,32 @@ namespace Script.Players
         {
             _isMoving = true;
             var speed = 0.1f;
-            var startPos = _player.Transform.position;
+            var startPos = _transform.position;
             var delta = 0f;
 
             for(; delta <= BaseMapTip.TipSize/2; delta += speed)
             {
-                _player.Transform.position +=
+                _transform.position +=
                     new Vector3(inputMove.X, 0, inputMove.Y) * speed;
                 yield return null;
             }
-            _mover.Execute(inputMove);
+            ChangeRegister(inputMove);
             for(; delta <= BaseMapTip.TipSize; delta += speed)
             {
-                _player.Transform.position +=
+                _transform.position +=
                     new Vector3(inputMove.X, 0, inputMove.Y) * speed;
                 yield return null;
             }
 
-            _player.Transform.position = startPos + new Vector3(inputMove.X, 0, inputMove.Y) * BaseMapTip.TipSize;
+            _transform.position = startPos + new Vector3(inputMove.X, 0, inputMove.Y) * BaseMapTip.TipSize;
             _isMoving = false;
+        }
+
+        private void ChangeRegister(Point point)
+        {
+            _removeSubject.OnNext(Unit.Default);
+            _parameter.Point += point;
+            _registerSubject.OnNext(Unit.Default);
         }
     }
 }
