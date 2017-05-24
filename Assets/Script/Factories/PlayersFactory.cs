@@ -11,18 +11,21 @@ namespace Script.Factories
     {
         private readonly GameObject _player;
         private readonly DiContainer _container;
+        private readonly Transform _parent;
 
-        public PlayersFactory(GameObject player, DiContainer container)
+        public PlayersFactory(GameObject player, DiContainer container, Transform parent)
         {
             _player = player;
             _container = container;
+            _parent = parent;
         }
 
         public PlayerFacade Create(Point point)
         {
-            var player = _container.InstantiatePrefabForComponent<PlayerFacade>(_player);
+            var player = _container.InstantiatePrefabForComponent<PlayerFacade>(_player, _parent);
             player.Point = point;
             player.SetTransform();
+            player.RegisterOnMapTip();
             return player;
         }
     }

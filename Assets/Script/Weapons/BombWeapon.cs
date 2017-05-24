@@ -7,12 +7,13 @@ namespace Script.Weapons
 {
     public class BombWeapon : BaseWeapon
     {
-        private readonly WeaponParameter _parameter = new WeaponParameter(Const.Attribute.Fire);
+        private readonly WeaponParameter _parameter;
         private readonly RegistablesFactory<BombBullet> _factory;
 
-        public BombWeapon(RegistablesFactory<BombBullet> factory)
+        public BombWeapon(RegistablesFactory<BombBullet> factory, Const.Attribute attribute)
         {
             _factory = factory;
+            _parameter = new WeaponParameter(attribute);
         }
 
         public override void Execute(Point current, Point forward)

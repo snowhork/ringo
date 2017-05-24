@@ -1,5 +1,6 @@
 ﻿using Script.Postions;
 using UniRx;
+using UnityEditorInternal;
 
 namespace Script.Characters
 {

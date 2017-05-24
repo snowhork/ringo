@@ -13,7 +13,7 @@ namespace Script.Characters
         [SerializeField] private int _maxHp;
         [SerializeField] private int _attack;
         [SerializeField] private float _speed;
-        [SerializeField] private Point _point;
+        private Point _point;
 
         public Point Point
         {
@@ -21,7 +21,7 @@ namespace Script.Characters
             set { _point = value; }
         }
 
-        [SerializeField] private Const.Attribute _attribute = Const.Attribute.Fire;
+        private Const.Attribute _attribute;
 
         public Const.Attribute Attribute
         {
@@ -31,9 +31,10 @@ namespace Script.Characters
         private readonly List<IWeapon> _weapons;
         private IWeapon _currentWeapon;
 
-        public BaseCharacterParameter(List<IWeapon> weapons)
+        public BaseCharacterParameter(List<IWeapon> weapons, Const.Attribute attribute)
         {
             _weapons = weapons;
+            _attribute = attribute;
             _currentWeapon = _weapons[0];
         }
 

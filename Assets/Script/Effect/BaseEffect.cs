@@ -11,6 +11,7 @@ namespace Script.Effect
     {
         private Point _point;
         protected IMapTipsCore MapTips;
+        private Const.Attribute _attribute;
 
         public Point Point
         {
@@ -18,11 +19,15 @@ namespace Script.Effect
             set { _point = value; }
         }
 
-        public GameObject GameObject { get; private set; }
+        public GameObject GameObject
+        {
+            get { return gameObject; }
+        }
 
         [Inject]
-        public void Construct(IMapTipsCore mapTips, List<RegistablesFactory<BaseEffect>> factories)
+        public void Construct(IMapTipsCore mapTips, List<RegistablesFactory<BaseEffect>> factories, Const.Attribute attribute)
         {
+            _attribute = attribute;
             MapTips = mapTips;
         }
 
@@ -33,12 +38,17 @@ namespace Script.Effect
 
         public void RemoveFromMapTip()
         {
-            throw new System.NotImplementedException();
+            MapTips.Register(this);
         }
 
         public void SetTransform()
         {
             transform.position = new Vector3(MapTipsCore.TipSize*Point.X, 1f, MapTipsCore.TipSize*Point.Y);
+        }
+
+        public Const.Attribute Attribute
+        {
+            get { return _attribute; }
         }
     }
 }

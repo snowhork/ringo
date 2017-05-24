@@ -16,17 +16,14 @@ namespace Script.Players
     {
         private IMapTipsCore _mapTipsCore;
 
-        [SerializeField]
         private BaseCharacterParameter _parameter;
         private IBehaviour _behaviour;
         private IHittable _hittable;
 
-        private Point _point;
-
         public Point Point
         {
-            get { return _point; }
-            set { _point = value; }
+            get { return _parameter.Point; }
+            set { _parameter.Point = value; }
         }
 
         public GameObject GameObject

@@ -18,56 +18,33 @@ namespace Script.Installers
     public class MainInstaller : MonoInstaller
     {
         [SerializeField] private GameObject _normalMapTip;
-        [SerializeField] private GameObject[] _portions;
         [SerializeField] private GameObject[] _blocks;
-        [SerializeField] private GameObject[] _effects;
-        [SerializeField] private GameObject _bombBullet;
-        [SerializeField] private GameObject _player;
+        [SerializeField] private GameObject[] _players;
 
         public override void InstallBindings()
         {
             Container.Bind<MapTipsFactory>()
                 .To<MapTipsFactory>().AsSingle()
-                .WithArguments(_normalMapTip);
+                .WithArguments(_normalMapTip,  new GameObject("MapTips").transform);
             Container.Bind<IMapTipsCore>().To<MapTipsCore>().AsSingle();
             Container.Bind<IMapCreator>().To<MapCreator>().AsSingle();
             Container.Bind<IMapTipsCollection>().To<MapTipsCollection>().AsSingle().NonLazy();
-
-            foreach (var portion in _portions)
-            {
-                Container.Bind<RegistablesFactory<BaseItem>>()
-                    .To<RegistablesFactory<BaseItem>>()
-                    .AsTransient()
-                    .WithArguments(portion);
-            }
 
             foreach (var block in _blocks)
             {
                 Container.Bind<BlocksFactory>()
                     .AsTransient()
-                    .WithArguments(block);
-            }
-
-            Container.Bind<RegistablesFactory<BombBullet>>()
-                .To<RegistablesFactory<BombBullet>>()
-                .AsSingle()
-                .WithArguments(_bombBullet);
-
-            Container.Bind<IWeapon>()
-                .To<BombWeapon>()
-                .AsTransient();
-
-            foreach (var effect in _effects)
-            {
-                Container.Bind<RegistablesFactory<BaseEffect>>()
-                    .AsTransient()
-                    .WithArguments(effect);
+                    .WithArguments(block, new GameObject("Blocks").transform);
             }
 
             Container.Bind<ITickable>().To<MainLoop>().AsSingle();
 
-            Container.Bind<PlayersFactory>().AsSingle().WithArguments(_player);
-            Container.BindIFactory<Point, PlayersFactory, PlayerFacade>().FromSubContainerResolve().ByNewPrefab<PlayerInstaller>(_player);
+            var playerParent = new GameObject("Players");
+            foreach (var player in _players)
+            {
+                Container.Bind<PlayersFactory>().AsTransient().WithArguments(player, playerParent.transform);
+                //Container.BindIFactory<Point, PlayersFactory, PlayerFacade>().FromSubContainerResolve().ByNewPrefab<PlayerInstaller>(player);
+            }
         }
     }
 }

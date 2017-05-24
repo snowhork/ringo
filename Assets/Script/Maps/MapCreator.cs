@@ -13,18 +13,18 @@ namespace Script.Maps
         private readonly IMapTipsCollection _collection;
         private readonly List<MapTipsFactory> _mapTipsFactories;
         private readonly List<BlocksFactory> _blocksFactories;
-        private readonly PlayersFactory _playersFactory;
+        private readonly List<PlayersFactory> _playersFactories;
 
         public MapCreator(DiContainer container, IMapTipsCollection collection,
             List<MapTipsFactory> mapTipsFactories,
             List<BlocksFactory> blocksFactories,
-            PlayersFactory playersFactory)
+            List<PlayersFactory> playersFactories)
         {
             _container = container;
             _collection = collection;
             _mapTipsFactories = mapTipsFactories;
             _blocksFactories = blocksFactories;
-            _playersFactory = playersFactory;
+            _playersFactories = playersFactories;
         }
 
         public void Initialize()
@@ -39,9 +39,8 @@ namespace Script.Maps
             }
             _collection.Initialize(tips);
 
-            _playersFactory.Create(new Point(0, 0));
-
-            //PlayerInstaller.InstallFromResource("Installers/PlayerInstaller", _container);
+            _playersFactories[0].Create(new Point(0, 0));
+            _playersFactories[1].Create(new Point(10, 10));
 
             for (var x = 1; x <= MapTipsCollection.MapSizeX - 2; x += 2)
             {
