@@ -29,11 +29,15 @@ namespace Script.Installers
             Container.Bind<IHittable>().To<PlayerHitter>().AsCached();
 
             Container.Bind<IWeapon>()
-                .To<BombWeapon>()
+                .To<CannonWeapon>()
                 .AsTransient()
                 .WithArguments(_attribute);
 
-            Container.Bind<RegistablesFactory<BombBullet>>()
+            // Container.Bind<RegistablesFactory<BombBullet>>()
+            //     .AsTransient()
+            //     .WithArguments(_bombBullet, new GameObject("Bullets").transform);
+
+            Container.Bind<RegistablesFactory<CannonBullet>>()
                 .AsTransient()
                 .WithArguments(_bombBullet, new GameObject("Bullets").transform);
 
