@@ -1,5 +1,4 @@
-﻿
-using Script.Attackers;
+﻿using Script.Attackers;
 using Script.Bullets;
 using Script.Characters;
 using Script.Effect;
@@ -32,10 +31,6 @@ namespace Script.Installers
                 .To<CannonWeapon>()
                 .AsTransient()
                 .WithArguments(_attribute);
-
-            // Container.Bind<RegistablesFactory<BombBullet>>()
-            //     .AsTransient()
-            //     .WithArguments(_bombBullet, new GameObject("Bullets").transform);
 
             Container.Bind<RegistablesFactory<CannonBullet>>()
                 .AsTransient()
