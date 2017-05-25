@@ -43,6 +43,16 @@ namespace Script.Maps
             return GetMapTip(point).Block;
         }
 
+        public IEffect GetEffect(Point point)
+        {
+            return GetMapTip(point).Effect;
+        }
+
+        public IBullet GetBullet(Point point)
+        {
+            return GetMapTip(point).Bullet;
+        }
+
         public void Register(IItem registrable)
         {
             GetMapTip(registrable.Point).Register(registrable);

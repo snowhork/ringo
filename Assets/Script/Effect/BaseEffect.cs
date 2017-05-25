@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using Script.Attackers;
 using Script.Factories;
+using Script.Hits;
 using Script.Maps;
 using Script.Postions;
+using Script.Weapons;
 using UnityEngine;
 using Zenject;
 
@@ -41,6 +44,12 @@ namespace Script.Effect
             MapTips.Register(this);
         }
 
+        public void Destroy()
+        {
+            Destroy(gameObject);
+            RemoveFromMapTip();
+        }
+
         public void SetTransform()
         {
             transform.position = new Vector3(MapTipsCore.TipSize*Point.X, 1f, MapTipsCore.TipSize*Point.Y);
@@ -49,6 +58,18 @@ namespace Script.Effect
         public Const.Attribute Attribute
         {
             get { return _attribute; }
+        }
+
+        public bool Hit(IAttacker attacker, out HitInfo info)
+        {
+            if (attacker.Attribute == Attribute)
+            {
+                info = new HitInfo(this, attacker, false);
+                return false;
+            }
+            info = new HitInfo(this, attacker, false);
+            return true;
+
         }
     }
 }

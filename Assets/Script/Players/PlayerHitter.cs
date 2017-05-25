@@ -1,4 +1,5 @@
-﻿using Script.Attackers;
+﻿using UnityEngine;
+using Script.Attackers;
 using Script.Characters;
 using Script.Hits;
 
@@ -13,9 +14,16 @@ namespace Script.Players
             _parameter = parameter;
         }
 
-        public bool Hit(IAttacker attacker)
+        public bool Hit(IAttacker attacker, out HitInfo info)
         {
-            if (_parameter.Attribute == attacker.Attribute) return false;
+            if (_parameter.Attribute == attacker.Attribute)
+            {
+                info = new HitInfo(this, attacker, false);
+                return false;
+            }
+            _parameter.Hp--;
+            Debug.Log(_parameter.Hp);
+            info = new HitInfo(this, attacker, true);
             return true;
         }
     }

@@ -13,6 +13,8 @@ namespace Script.Maps
         IItem GetItem(Point point);
         IPlayer GetPlayer(Point point);
         IBlock GetBlock(Point point);
+        IEffect GetEffect(Point point);
+        IBullet GetBullet(Point point);
         void Register(IItem registrable);
         void Register(IBlock registrable);
         void Register(IPlayer registrable);

@@ -54,9 +54,9 @@ namespace Script.Players
             StartCoroutine(coroutine);
         }
 
-        public bool Hit(IAttacker attacker)
+        public bool Hit(IAttacker attacker, out HitInfo info)
         {
-            return _hittable.Hit(attacker);
+            return _hittable.Hit(attacker, out info);
         }
 
         public void SetTransform()
@@ -77,6 +77,11 @@ namespace Script.Players
         public void RemoveFromMapTip()
         {
             _mapTipsCore.Remove(this);
+        }
+
+        public void Destroy()
+        {
+            throw new NotImplementedException();
         }
 
         public Const.Attribute Attribute

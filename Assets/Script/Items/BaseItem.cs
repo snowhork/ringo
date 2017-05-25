@@ -45,9 +45,9 @@ namespace Script.Items
             MapTips.Remove(this);
         }
 
-        protected void Destroy()
+        public void Destroy()
         {
-            MapTips.Remove(this);
+            RemoveFromMapTip();
             Destroy(gameObject);
         }
     }

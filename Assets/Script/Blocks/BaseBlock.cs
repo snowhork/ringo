@@ -1,4 +1,5 @@
 ﻿using Script.Attackers;
+using Script.Hits;
 using Script.Maps;
 using Script.Postions;
 using UnityEngine;
@@ -38,11 +39,17 @@ namespace Script.Blocks
             _mapTipsCore.Remove(this);
         }
 
+        public void Destroy()
+        {
+            _mapTipsCore.Remove(this);
+            Destroy(gameObject);
+        }
+
         public void SetTransform()
         {
             transform.position = new Vector3(MapTipsCore.TipSize*Point.X, 1f, MapTipsCore.TipSize*Point.Y);
         }
 
-        public abstract bool Hit(IAttacker attacker);
+        public abstract bool Hit(IAttacker attacker, out HitInfo info);
     }
 }

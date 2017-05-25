@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using System.Security.Cryptography.X509Certificates;
+using Script.Hits;
 using Script.Maps;
 using Script.Postions;
 using UnityEngine;
@@ -48,8 +50,7 @@ namespace Script.Bullets
 
                 transform.position = startPos + new Vector3(AttackForward.X, 0, AttackForward.Y) * BaseMapTip.TipSize;
             }
-            RemoveFromMapTip();
-            Destroy(gameObject);
+            Destroy();
             if (MapTips.EnterableMapTip(Point))
             {
                 var effect = Factories[0].Create(Point);
@@ -64,10 +65,14 @@ namespace Script.Bullets
 
             var player = MapTips.GetPlayer(nextPoint);
             var block = MapTips.GetBlock(nextPoint);
+            var bullet = MapTips.GetBullet(nextPoint);
+            var effect = MapTips.GetEffect(nextPoint);
+
+            HitInfo info;
 
             if (player != null)
             {
-                if (player.Hit(this))
+                if (player.Hit(this, out info))
                 {
                     Move(moveForward);
                     return false;
@@ -75,9 +80,24 @@ namespace Script.Bullets
             }
             if (block != null)
             {
-                if (block.Hit(this)) Move(moveForward);
+                if (block.Hit(this, out info)) Move(moveForward);
                 return false;
             }
+            if (bullet != null)
+            {
+                bullet.Destroy();
+                return false; // to do: このままだとeffectがつく
+            }
+            if (effect != null)
+            {
+                if (effect.Hit(this, out info))
+                {
+                    Move(moveForward);
+                    return false;
+                }
+            }
+
+
             Move(moveForward);
             return true;
         }

@@ -1,13 +1,15 @@
 ﻿using Script.Attackers;
+using Script.Hits;
 using Script.Maps;
 
 namespace Script.Blocks
 {
     public class HardBlock : BaseBlock
     {
-        public override bool Hit(IAttacker attacker)
+        public override bool Hit(IAttacker attacker, out HitInfo info)
         {
-            return false;
+            info = new HitInfo(this, attacker, true, hittableIsBroken: false);
+            return true;
         }
     }
 }

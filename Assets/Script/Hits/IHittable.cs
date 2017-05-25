@@ -4,6 +4,6 @@ namespace Script.Hits
 {
     public interface IHittable
     {
-        bool Hit(IAttacker attacker);
+        bool Hit(IAttacker attacker, out HitInfo info);
     }
 }

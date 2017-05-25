@@ -2,6 +2,7 @@
 using System.Runtime.Remoting.Metadata;
 using Script.Attackers;
 using Script.Characters;
+using Script.Hits;
 using Script.Maps;
 using Script.Postions;
 using UniRx;
@@ -16,6 +17,7 @@ namespace Script.Players
         private readonly BaseCharacterParameter _parameter;
         private readonly Transform _transform;
         private readonly IMapTipsCore _mapTipsCore;
+        private readonly IHittable _hitter;
 
         private readonly PlayerMoveInput _moveInput = new PlayerMoveInput();
         private readonly PlayerAttackInput _attackInput = new PlayerAttackInput();
@@ -29,11 +31,13 @@ namespace Script.Players
         public PlayerBehaviour(
             BaseCharacterParameter parameter,
             Transform transform,
-            IMapTipsCore mapTipsCore)
+            IMapTipsCore mapTipsCore,
+            IHittable hitter)
         {
             _parameter = parameter;
             _transform = transform;
             _mapTipsCore = mapTipsCore;
+            _hitter = hitter;
         }
 
         public void Execute()
@@ -55,7 +59,6 @@ namespace Script.Players
             get { return _registerSubject; }
         }
 
-
         private void Moving(Point moveForward)
         {
             SetRotation(moveForward);
@@ -65,9 +68,12 @@ namespace Script.Players
 
             var player = _mapTipsCore.GetPlayer(nextPoint);
             var block = _mapTipsCore.GetBlock(nextPoint);
+            var effect = _mapTipsCore.GetEffect(nextPoint);
+            HitInfo info;
 
             if (player != null) return;
             if (block != null) return;
+            if (effect != null) _hitter.Hit(effect, out info);
 
             Observable.FromCoroutine(_ => MoveCoroutine(moveForward)).Subscribe();
         }

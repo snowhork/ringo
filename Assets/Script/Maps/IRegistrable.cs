@@ -7,5 +7,6 @@ namespace Script.Maps
         void SetTransform();
         void RegisterOnMapTip();
         void RemoveFromMapTip();
+        void Destroy();
     }
 }
