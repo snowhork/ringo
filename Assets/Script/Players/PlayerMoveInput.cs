@@ -7,11 +7,18 @@ namespace Script.Players
     {
         public Point MoveInput()
         {
-            if (Input.GetKey(KeyCode.RightArrow)) return new Point(1,  0);
-            if (Input.GetKey(KeyCode.LeftArrow))  return new Point(-1, 0);
-            if (Input.GetKey(KeyCode.UpArrow))   return new Point(0, 1);
-            if (Input.GetKey(KeyCode.DownArrow))   return new Point(0, -1);
-            return new Point(0, 0);
+            var point = new Point(0, 0);
+            if (Input.GetKey(KeyCode.RightArrow)) point = new Point(1,  0);
+            if (Input.GetKey(KeyCode.LeftArrow))  point = new Point(-1, 0);
+            if (Input.GetKey(KeyCode.UpArrow))   point = new Point(0, 1);
+            if (Input.GetKey(KeyCode.DownArrow))   point = new Point(0, -1);
+
+            var i = (int)PhotonNetwork.room.customProperties["PositionNumber"];
+            if (point != Point.Zero())
+            {
+                GameObject.Find("sync" + i).GetComponent<SyncInput>().Point = point;
+            }
+            return point;
         }
     }
 }

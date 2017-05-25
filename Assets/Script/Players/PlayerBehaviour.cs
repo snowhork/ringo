@@ -1,14 +1,10 @@
 ﻿using System.Collections;
-using System.Runtime.Remoting.Metadata;
-using Script.Attackers;
 using Script.Characters;
 using Script.Hits;
 using Script.Maps;
 using Script.Postions;
 using UniRx;
-using UnityEditor;
 using UnityEngine;
-using Zenject;
 
 namespace Script.Players
 {

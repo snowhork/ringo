@@ -1,6 +1,4 @@
-﻿using Script.Postions;
-using UniRx;
-using UnityEditorInternal;
+﻿using UniRx;
 
 namespace Script.Characters
 {
@@ -10,4 +8,5 @@ namespace Script.Characters
         IObservable<Unit> RemoveFromMapTip { get; }
         IObservable<Unit> RegisterOnMapTip { get; }
     }
+
 }
