@@ -30,7 +30,7 @@ namespace Script.Items
 
         public abstract void Use(BaseCharacterParameter parameter);
 
-        public void SetTransforn()
+        public void SetTransform()
         {
             transform.position = new Vector3(BaseMapTip.TipSize*Point.X, 1f, BaseMapTip.TipSize*Point.Y);
         }
@@ -45,9 +45,9 @@ namespace Script.Items
             MapTips.Remove(this);
         }
 
-        protected void Destroy()
+        public void Destroy()
         {
-            MapTips.Remove(this);
+            RemoveFromMapTip();
             Destroy(gameObject);
         }
     }

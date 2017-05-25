@@ -1,9 +1,8 @@
-﻿using Script.Damages;
+﻿using Script.Attributes;
 
 namespace Script.Attackers
 {
-    public interface IAttacker
+    public interface IAttacker : IAttribute
     {
-        void Execute(IDamagable damagable);
     }
 }

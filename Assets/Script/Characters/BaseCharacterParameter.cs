@@ -1,14 +1,42 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using Script.Postions;
+using Script.Weapons;
+using UnityEngine;
 
 namespace Script.Characters
 {
-    [System.Serializable]
+    [Serializable]
     public class BaseCharacterParameter
     {
         [SerializeField] private int _hp;
         [SerializeField] private int _maxHp;
         [SerializeField] private int _attack;
         [SerializeField] private float _speed;
+        private Point _point;
+
+        public Point Point
+        {
+            get { return _point; }
+            set { _point = value; }
+        }
+
+        private Const.Attribute _attribute;
+
+        public Const.Attribute Attribute
+        {
+            get { return _attribute; }
+        }
+
+        private readonly List<IWeapon> _weapons;
+        private IWeapon _currentWeapon;
+
+        public BaseCharacterParameter(List<IWeapon> weapons, Const.Attribute attribute)
+        {
+            _weapons = weapons;
+            _attribute = attribute;
+            _currentWeapon = _weapons[0];
+        }
 
         public int Hp
         {
@@ -16,7 +44,6 @@ namespace Script.Characters
             set
             {
                 _hp = value;
-                Debug.Log(_hp);
             }
         }
 
@@ -36,6 +63,11 @@ namespace Script.Characters
         {
             get { return _speed; }
             set { _speed = value; }
+        }
+
+        public IWeapon CurrentWeapon
+        {
+            get { return _currentWeapon; }
         }
     }
 }

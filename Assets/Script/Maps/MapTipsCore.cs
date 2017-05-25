@@ -1,7 +1,10 @@
-﻿using Script.Creatures;
+﻿using Script.Blocks;
+using Script.Bullets;
+using Script.Effect;
 using Script.Items;
 using Script.Players;
 using Script.Postions;
+using UnityEngine;
 
 namespace Script.Maps
 {
@@ -35,9 +38,19 @@ namespace Script.Maps
             return GetMapTip(point).Player;
         }
 
-        public ICreature GetCreature(Point point)
+        public IBlock GetBlock(Point point)
         {
-            return GetMapTip(point).Creature;
+            return GetMapTip(point).Block;
+        }
+
+        public IEffect GetEffect(Point point)
+        {
+            return GetMapTip(point).Effect;
+        }
+
+        public IBullet GetBullet(Point point)
+        {
+            return GetMapTip(point).Bullet;
         }
 
         public void Register(IItem registrable)
@@ -45,7 +58,7 @@ namespace Script.Maps
             GetMapTip(registrable.Point).Register(registrable);
         }
 
-        public void Register(ICreature registrable)
+        public void Register(IBlock registrable)
         {
             GetMapTip(registrable.Point).Register(registrable);
         }
@@ -55,17 +68,37 @@ namespace Script.Maps
             GetMapTip(registrable.Point).Register(registrable);
         }
 
+        public void Register(IBullet registrable)
+        {
+            GetMapTip(registrable.Point).Register(registrable);
+        }
+
+        public void Register(IEffect registrable)
+        {
+            GetMapTip(registrable.Point).Register(registrable);
+        }
+
         public void Remove(IItem registrable)
         {
             GetMapTip(registrable.Point).Remove(registrable);
         }
 
-        public void Remove(ICreature registrable)
+        public void Remove(IBlock registrable)
         {
             GetMapTip(registrable.Point).Remove(registrable);
         }
 
         public void Remove(IPlayer registrable)
+        {
+            GetMapTip(registrable.Point).Remove(registrable);
+        }
+
+        public void Remove(IBullet registrable)
+        {
+            GetMapTip(registrable.Point).Remove(registrable);
+        }
+
+        public void Remove(IEffect registrable)
         {
             GetMapTip(registrable.Point).Remove(registrable);
         }
