@@ -23,7 +23,11 @@ namespace Script.Players
 
         public Point AttackInput()
         {
-            throw new System.NotImplementedException();
+            if (Input.GetButtonDown("UpButton" + _id)) return new Point(0, 1);
+            if (Input.GetButtonDown("DownButton" + _id)) return new Point(0, -1);
+            if (Input.GetButtonDown("RightButton" + _id)) return new Point(1, 0);
+            if (Input.GetButtonDown("LeftButton" + _id)) return new Point(-1, 0);
+            return new Point(0, 0);
         }
     }
 }

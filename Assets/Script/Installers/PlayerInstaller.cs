@@ -22,7 +22,7 @@ namespace Script.Installers
 
         public override void InstallBindings()
         {
-            var id = (int) _attribute - 1;
+            var id = (int) _attribute;
             Container.BindInstance(id);
             Container.BindInstance(_attribute);
             Container.Bind<IBehaviour>().To<PlayerBehaviour>().AsTransient().WithArguments(_transform);
