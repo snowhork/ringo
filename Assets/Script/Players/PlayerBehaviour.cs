@@ -19,8 +19,7 @@ namespace Script.Players
         private readonly IMapTipsCore _mapTipsCore;
         private readonly IHittable _hitter;
 
-        private readonly PlayerMoveInput _moveInput = new PlayerMoveInput();
-        private readonly PlayerAttackInput _attackInput = new PlayerAttackInput();
+        private readonly IPlayerInput _input;
 
         private bool _isMoving = false;
         private bool _isAttacking = false;
@@ -32,18 +31,20 @@ namespace Script.Players
             BaseCharacterParameter parameter,
             Transform transform,
             IMapTipsCore mapTipsCore,
-            IHittable hitter)
+            IHittable hitter,
+            IPlayerInput input)
         {
             _parameter = parameter;
             _transform = transform;
             _mapTipsCore = mapTipsCore;
             _hitter = hitter;
+            _input = input;
         }
 
         public void Execute()
         {
-            var moveForward = _moveInput.MoveInput();
-            var attackForward = _attackInput.AttackInput();
+            var moveForward = _input.MoveInput();
+            var attackForward = _input.AttackInput();
 
             if (!(moveForward   == Point.Zero() || _isMoving)) Moving(moveForward);
             if (!(attackForward == Point.Zero() || _isAttacking )) Attacking(attackForward);

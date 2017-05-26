@@ -22,10 +22,15 @@ namespace Script.Installers
 
         public override void InstallBindings()
         {
+            var id = (int) _attribute - 1;
+            Container.BindInstance(id);
             Container.BindInstance(_attribute);
             Container.Bind<IBehaviour>().To<PlayerBehaviour>().AsTransient().WithArguments(_transform);
             Container.Bind<BaseCharacterParameter>().To<PlayerParameter>().AsCached();
             Container.Bind<IHittable>().To<PlayerHitter>().AsCached();
+            //Container.Bind<IPlayerInput>().To<PlayerInputByKey>().AsCached();
+            Container.Bind<IPlayerInput>().To<PlayerInputByJoyCon>().AsCached();
+
 
             Container.Bind<IWeapon>()
                 .To<CannonWeapon>()
