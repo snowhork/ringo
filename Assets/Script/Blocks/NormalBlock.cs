@@ -11,6 +11,7 @@ namespace Script.Blocks
         {
             RemoveFromMapTip();
             Destroy(gameObject);
+            SpawnItem();
             info = new HitInfo(this, attacker, true, hittableIsBroken: true);
             return true;
         }

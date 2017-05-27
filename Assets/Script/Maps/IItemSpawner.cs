@@ -1,16 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using Script.Postions;
 
-public class IItemSpawner : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+namespace Script.Maps
+{
+    public interface IItemSpawner
+    {
+        void Spawn(Point point);
+    }
 }
