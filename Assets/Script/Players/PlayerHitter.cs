@@ -28,7 +28,6 @@ namespace Script.Players
             }
             _parameter.Hp--;
             Observable.FromCoroutine(Flash).Subscribe();
-            Debug.Log(_parameter.Hp);
             info = new HitInfo(this, attacker, true);
             return true;
         }
