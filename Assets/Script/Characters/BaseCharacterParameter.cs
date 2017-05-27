@@ -9,9 +9,7 @@ namespace Script.Characters
     [Serializable]
     public class BaseCharacterParameter
     {
-        [SerializeField] private int _hp;
-        [SerializeField] private int _maxHp;
-        [SerializeField] private int _attack;
+        private int _hp = 3;
         [SerializeField] private float _speed;
         private Point _point;
 
@@ -46,19 +44,7 @@ namespace Script.Characters
                 _hp = value;
             }
         }
-
-        public int MaxHp
-        {
-            get { return _maxHp; }
-            set { _maxHp = value; }
-        }
-
-        public int Attack
-        {
-            get { return _attack; }
-            set { _attack = value; }
-        }
-
+        
         public float Speed
         {
             get { return _speed; }

@@ -19,13 +19,20 @@ namespace Script.Installers
         [SerializeField] private GameObject _bombBullet;
         [SerializeField] private Const.Attribute _attribute;
         [SerializeField] private GameObject _effect;
+        [SerializeField] private Renderer _renderer;
 
         public override void InstallBindings()
         {
+            var id = (int) _attribute;
+            Container.BindInstance(id);
             Container.BindInstance(_attribute);
+            Container.BindInstance(_renderer);
             Container.Bind<IBehaviour>().To<PlayerBehaviour>().AsTransient().WithArguments(_transform);
             Container.Bind<BaseCharacterParameter>().To<PlayerParameter>().AsCached();
             Container.Bind<IHittable>().To<PlayerHitter>().AsCached();
+            Container.Bind<IPlayerInput>().To<PlayerInputByKey>().AsCached();
+            //Container.Bind<IPlayerInput>().To<PlayerInputByJoyCon>().AsCached();
+
 
             Container.Bind<IWeapon>()
                 .To<CannonWeapon>()
