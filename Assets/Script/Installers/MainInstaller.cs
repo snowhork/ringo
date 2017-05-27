@@ -8,6 +8,7 @@ using Script.Items;
 using Script.Maps;
 using Script.Players;
 using Script.Postions;
+using Script.UI;
 using Script.Weapons;
 using UniRx;
 using UnityEngine;
@@ -21,9 +22,10 @@ namespace Script.Installers
         [SerializeField] private GameObject[] _blocks;
         [SerializeField] private GameObject[] _items;
         [SerializeField] private GameObject[] _players;
+        [SerializeField] private GameObject _effectsUi;
 
         public override void InstallBindings()
-        {
+        {            
             Container.Bind<MapTipsFactory>()
                 .To<MapTipsFactory>().AsSingle()
                 .WithArguments(_normalMapTip,  new GameObject("MapTips").transform);
@@ -54,6 +56,8 @@ namespace Script.Installers
                 Container.Bind<PlayersFactory>().AsTransient().WithArguments(player, playerParent.transform);
                 //Container.BindIFactory<Point, PlayersFactory, PlayerFacade>().FromSubContainerResolve().ByNewPrefab<PlayerInstaller>(player);
             }
+
+            Container.Bind<EffectUi>().FromComponentInNewPrefab(_effectsUi).AsSingle().NonLazy();
         }
     }
 }

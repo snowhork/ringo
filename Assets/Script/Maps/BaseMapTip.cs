@@ -4,6 +4,7 @@ using Script.Effect;
 using Script.Items;
 using Script.Players;
 using Script.Postions;
+using UniRx;
 using UnityEngine;
 
 namespace Script.Maps
@@ -17,6 +18,12 @@ namespace Script.Maps
 		protected IPlayer _player;
 		protected IBullet _bullet;
 		protected IEffect _effect;
+		
+		private Subject<Const.Attribute> _increaseEffectSubject = new Subject<Const.Attribute>(); 
+		private Subject<Const.Attribute> _decreaseEffectSubject = new Subject<Const.Attribute>();
+		
+		public IObservable<Const.Attribute> OnIncreaseEffect { get { return _increaseEffectSubject; }}
+		public IObservable<Const.Attribute> OnDecreaseEffect { get { return _decreaseEffectSubject; }}
 
 		private void OnDestroy()
 		{
@@ -84,6 +91,7 @@ namespace Script.Maps
 		public void Register(IEffect effect)
 		{
 			_effect = effect;
+			_increaseEffectSubject.OnNext(effect.Attribute);
 		}
 
 		public void Remove(IItem item)
@@ -114,6 +122,7 @@ namespace Script.Maps
 		{
 			if(effect != _effect) return;
 			_effect = null;
+			_decreaseEffectSubject.OnNext(effect.Attribute);
 		}
 
 		public void SetTransform()
