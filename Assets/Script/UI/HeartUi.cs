@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using Script.Characters;
+using UnityEngine;
 using Zenject;
+using UniRx;
 
 namespace Script.UI
 {
@@ -7,6 +9,12 @@ namespace Script.UI
     {
         [SerializeField] private Renderer[] _hearts;
 
+        [Inject]
+        public void Construct(BaseCharacterParameter parameter)
+        {
+            parameter.OnHpChanged.Subscribe(SetHeart);
+        }
+        
         private void Start()
         {
             transform.parent = Camera.main.transform;
@@ -15,7 +23,7 @@ namespace Script.UI
             SetHeart(3);
         }
 
-        public void SetHeart(int hp)
+        private void SetHeart(int hp)
         {
 
             for (var i = 0; i < _hearts.Length; i++)
