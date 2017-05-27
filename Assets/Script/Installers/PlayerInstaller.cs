@@ -17,7 +17,7 @@ namespace Script.Installers
     public class PlayerInstaller : MonoInstaller
     {
         [SerializeField] private Transform _transform;
-        [SerializeField] private GameObject _bombBullet;
+        [SerializeField] private GameObject _cannonBullet;
         [SerializeField] private Const.Attribute _attribute;
         [SerializeField] private GameObject _effect;
         [SerializeField] private Renderer _renderer;
@@ -44,7 +44,7 @@ namespace Script.Installers
 
             Container.Bind<RegistablesFactory<CannonBullet>>()
                 .AsTransient()
-                .WithArguments(_bombBullet, new GameObject("Bullets").transform);
+                .WithArguments(_cannonBullet, new GameObject("Bullets").transform);
 
             Container.Bind<RegistablesFactory<BaseEffect>>()
                 .AsTransient()

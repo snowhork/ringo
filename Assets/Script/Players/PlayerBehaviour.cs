@@ -69,11 +69,13 @@ namespace Script.Players
 
             var player = _mapTipsCore.GetPlayer(nextPoint);
             var block = _mapTipsCore.GetBlock(nextPoint);
+            var item = _mapTipsCore.GetItem(nextPoint);
             var effect = _mapTipsCore.GetEffect(nextPoint);
             HitInfo info;
 
             if (player != null) return;
             if (block != null) return;
+            if (item != null) item.Use(_parameter);
             if (effect != null) _hitter.Hit(effect, out info);
 
             Observable.FromCoroutine(_ => MoveCoroutine(moveForward)).Subscribe();

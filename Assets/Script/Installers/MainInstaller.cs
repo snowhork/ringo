@@ -19,6 +19,7 @@ namespace Script.Installers
     {
         [SerializeField] private GameObject _normalMapTip;
         [SerializeField] private GameObject[] _blocks;
+        [SerializeField] private GameObject[] _items;
         [SerializeField] private GameObject[] _players;
 
         public override void InstallBindings()
@@ -28,6 +29,7 @@ namespace Script.Installers
                 .WithArguments(_normalMapTip,  new GameObject("MapTips").transform);
             Container.Bind<IMapTipsCore>().To<MapTipsCore>().AsSingle();
             Container.Bind<IMapCreator>().To<MapCreator>().AsSingle();
+            Container.Bind<IItemSpawner>().To<ItemSpawner>().AsSingle();
             Container.Bind<IMapTipsCollection>().To<MapTipsCollection>().AsSingle().NonLazy();
 
             foreach (var block in _blocks)
@@ -38,6 +40,13 @@ namespace Script.Installers
             }
 
             Container.Bind<ITickable>().To<MainLoop>().AsSingle();
+
+            foreach (var item in _items)
+            {
+                Container.Bind<ItemsFactory>()
+                    .AsTransient()
+                    .WithArguments(item, new GameObject("Items").transform);
+            }
 
             var playerParent = new GameObject("Players");
             foreach (var player in _players)

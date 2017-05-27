@@ -10,12 +10,14 @@ namespace Script.Blocks
     public abstract class BaseBlock : MonoBehaviour, IBlock
     {
         private IMapTipsCore _mapTipsCore;
+        private IItemSpawner _itemspawner;
         private Point _point;
 
         [Inject]
-        public void Construct(IMapTipsCore mapTipsCore)
+        public void Construct(IMapTipsCore mapTipsCore, IItemSpawner itemspawner)
         {
             _mapTipsCore = mapTipsCore;
+            _itemspawner = itemspawner;
         }
 
         public Point Point
@@ -48,6 +50,11 @@ namespace Script.Blocks
         public void SetTransform()
         {
             transform.position = new Vector3(MapTipsCore.TipSize*Point.X, 1f, MapTipsCore.TipSize*Point.Y);
+        }
+
+        public void SpawnItem()
+        {
+            _itemspawner.Spawn(Point);
         }
 
         public abstract bool Hit(IAttacker attacker, out HitInfo info);
