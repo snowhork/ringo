@@ -16,7 +16,14 @@ namespace Script.Signals
 
         void Settlement(int playerNum)
         {
-            Debug.Log(playerNum + "の勝利！");
+            if (playerNum == -1)
+            {
+                Debug.Log("ドロー");
+            }
+            else
+            {
+                Debug.Log(playerNum + "の勝利！");
+            }
         }
     }
 }
