@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections;
+using Script.Signals;
 using Script.Attackers;
 using Script.Characters;
 using Script.Hits;
 using Script.Maps;
 using Script.Postions;
 using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
 using Zenject;
 
@@ -40,8 +40,11 @@ namespace Script.Players
             _hittable = hittable;
             _mapTipsCore = mapTipsCore;
 
+            _parameter.OnDied.Subscribe(_ => Destroy());
+            
             _behaviour.RegisterOnMapTip.Subscribe(_ => RegisterOnMapTip());
             _behaviour.RemoveFromMapTip.Subscribe(_ => RemoveFromMapTip());
+            
         }
 
         public Transform Transform
@@ -81,7 +84,8 @@ namespace Script.Players
 
         public void Destroy()
         {
-            throw new NotImplementedException();
+            _mapTipsCore.Remove(this);
+            Destroy(this);
         }
 
         public Const.Attribute Attribute

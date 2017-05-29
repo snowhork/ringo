@@ -51,8 +51,11 @@ namespace Script.Bullets
                 transform.position = startPos + new Vector3(AttackForward.X, 0, AttackForward.Y) * BaseMapTip.TipSize;
                 if (MapTips.EnterableMapTip(Point))
                 {
-                    var effect = Factories[0].Create(Point);
-                    effect.SetTransform();
+                    if (MapTips.GetEffect(Point) == null)
+                    {
+                        var effect = Factories[0].Create(Point);
+                        effect.SetTransform();
+                    }
                 }
             }
             Destroy();
@@ -90,11 +93,11 @@ namespace Script.Bullets
             }
             if (effect != null)
             {
-                if (effect.Hit(this, out info))
-                {
-                    Move(moveForward);
-                    return false;
-                }
+//                if (effect.Hit(this, out info))
+//                {
+//                    Move(moveForward);
+//                    return false;
+//                }
             }
 
 

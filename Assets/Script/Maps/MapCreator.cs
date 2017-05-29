@@ -40,7 +40,7 @@ namespace Script.Maps
             _collection.Initialize(tips);
 
             _playersFactories[0].Create(new Point(0, 0));
-            _playersFactories[1].Create(new Point(10, 10));
+            _playersFactories[1].Create(new Point(14, 14));
 
             for (var x = 1; x <= MapTipsCollection.MapSizeX - 2; x += 2)
             {

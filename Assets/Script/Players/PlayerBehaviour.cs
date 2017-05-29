@@ -1,14 +1,10 @@
 ﻿using System.Collections;
-using System.Runtime.Remoting.Metadata;
-using Script.Attackers;
 using Script.Characters;
 using Script.Hits;
 using Script.Maps;
 using Script.Postions;
 using UniRx;
-using UnityEditor;
 using UnityEngine;
-using Zenject;
 
 namespace Script.Players
 {
@@ -43,8 +39,9 @@ namespace Script.Players
 
         public void Execute()
         {
+            
             var moveForward = _input.MoveInput();
-            var attackForward = _input.AttackInput();
+            var attackForward = _input.AttackInput();            
 
             if (!(moveForward   == Point.Zero() || _isMoving)) Moving(moveForward);
             if (!(attackForward == Point.Zero() || _isAttacking )) Attacking(attackForward);

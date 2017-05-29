@@ -34,8 +34,8 @@ namespace Script.Installers
             Container.Bind<BaseCharacterParameter>().To<PlayerParameter>().AsCached();
             Container.Bind<IHittable>().To<PlayerHitter>().AsCached();
             Container.Bind<IPlayerInput>().To<PlayerInputByKey>().AsCached();
-            //Container.Bind<IPlayerInput>().To<PlayerInputByJoyCon>().AsCached();
-
+//            Container.Bind<IPlayerInput>().To<PlayerInputByJoyCon>().AsCached();
+            Container.Bind<HpParameter>().AsCached();
 
             Container.Bind<IWeapon>()
                 .To<CannonWeapon>()

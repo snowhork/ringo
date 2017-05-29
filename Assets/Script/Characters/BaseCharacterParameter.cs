@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Script.Postions;
-using Script.UI;
+using Script.Signals;
 using Script.Weapons;
 using UniRx;
 using UnityEngine;
@@ -11,13 +11,14 @@ namespace Script.Characters
     [Serializable]
     public class BaseCharacterParameter
     {
-        private IntReactiveProperty _hp = new IntReactiveProperty(3);
         [SerializeField] private float _speed;
         private Point _point;
 
+        private readonly HpParameter _hpParameter;
+
         public IObservable<int> OnHpChanged
         {
-            get { return _hp; }
+            get { return _hpParameter.OnHpChanged; }
         }
 
         public Point Point
@@ -27,7 +28,7 @@ namespace Script.Characters
         }
 
         private Const.Attribute _attribute;
-
+        
         public Const.Attribute Attribute
         {
             get { return _attribute; }
@@ -36,20 +37,18 @@ namespace Script.Characters
         private readonly List<IWeapon> _weapons;
         private IWeapon _currentWeapon;
 
-        public BaseCharacterParameter(List<IWeapon> weapons, Const.Attribute attribute)
+        public BaseCharacterParameter(List<IWeapon> weapons, Const.Attribute attribute, HpParameter hpParameter)
         {
             _weapons = weapons;
             _attribute = attribute;
+            _hpParameter = hpParameter;
             _currentWeapon = _weapons[0];
         }
 
         public int Hp
         {
-            get { return _hp.Value; }
-            set
-            {
-                _hp.Value = value;
-            }
+            get { return _hpParameter.Hp; }
+            set { _hpParameter.Hp = value; }
         }
 
         public float Speed
@@ -61,6 +60,11 @@ namespace Script.Characters
         public IWeapon CurrentWeapon
         {
             get { return _currentWeapon; }
+        }
+
+        public IObservable<Unit> OnDied
+        {
+            get { return _hpParameter.OnDied; }
         }
     }
 }
