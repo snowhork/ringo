@@ -7,12 +7,14 @@ namespace Script
 {
     public class Timer : ITickable
     {
-        private float _remainTime = 60f;
+        private float _remainTime;
+        public const float MaxTime = 60f;
         private IMapTipsCollection _mapTipsCollection;
         private SettlementSignal _settlementSignal;
 
         public Timer(IMapTipsCollection mapTipsCollection, SettlementSignal settlementSignal)
         {
+            _remainTime = MaxTime;
             _mapTipsCollection = mapTipsCollection;
             _settlementSignal = settlementSignal;
         }
@@ -24,8 +26,13 @@ namespace Script
             if (_remainTime <= 0)
             {
                 TimerEnd();
-            }
-            
+            }            
+        }
+        
+
+        public float RemainTime
+        {
+            get { return _remainTime; }
         }
 
         private void TimerEnd()

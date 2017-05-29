@@ -14,6 +14,7 @@ namespace Script.Installers
         [SerializeField] private GameObject[] _items;
         [SerializeField] private GameObject[] _players;
         [SerializeField] private GameObject _effectsUi;
+        [SerializeField] private GameObject _timerUi;
 
         public override void InstallBindings()
         {
@@ -39,7 +40,8 @@ namespace Script.Installers
             }
 
             Container.Bind<ITickable>().To<MainLoop>().AsTransient();
-            Container.Bind<ITickable>().To<Timer>().AsTransient();
+            Container.Bind<ITickable>().To<Timer>().AsSingle();
+            Container.Bind<Timer>().AsSingle();
 
             foreach (var item in _items)
             {
@@ -56,6 +58,7 @@ namespace Script.Installers
             }
 
             Container.Bind<EffectUi>().FromComponentInNewPrefab(_effectsUi).AsSingle().NonLazy();
+            Container.Bind<TimerUi>().FromComponentInNewPrefab(_timerUi).AsSingle().NonLazy();
         }
     }
 }
