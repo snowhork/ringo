@@ -11,7 +11,7 @@ namespace Script.Characters
     [Serializable]
     public class BaseCharacterParameter
     {
-        [SerializeField] private float _speed;
+        private float _speed = 0.1f;
         private float _coolTime = 1.0f;
         private Point _point;
 

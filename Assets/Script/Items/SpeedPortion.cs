@@ -1,16 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Script.Characters;
+using Script.Players;
+using Script.Postions;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 
-public class SpeedPortion : MonoBehaviour {
+namespace Script.Items
+{
+    public class SpeedPortion : BaseItem
+    {
+        [SerializeField] private float _speedValue;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        public override void Use(BaseCharacterParameter parameter)
+        {
+            parameter.Speed += _speedValue;
+            Destroy();
+        }
+    }
 }
