@@ -38,7 +38,8 @@ namespace Script.Installers
                     .WithArguments(block, new GameObject("Blocks").transform);
             }
 
-            Container.Bind<ITickable>().To<MainLoop>().AsSingle();
+            Container.Bind<ITickable>().To<MainLoop>().AsTransient();
+            Container.Bind<ITickable>().To<Timer>().AsTransient();
 
             foreach (var item in _items)
             {

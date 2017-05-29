@@ -10,4 +10,9 @@ namespace Script.Signals
     {
         
     }
+        
+    public class TimerEndSignal : Signal<TimerEndSignal>
+    {
+        
+    }
 }
