@@ -26,8 +26,17 @@ namespace Script.Players
                 info = new HitInfo(this, attacker, false);
                 return false;
             }
+            
             _parameter.Hp--;
-            Observable.FromCoroutine(Flash).Subscribe();
+            if (_parameter.Hp != 0)
+            {
+                Observable.FromCoroutine(Flash).Subscribe();
+            }
+            else
+            {
+                Observable.FromCoroutine(Die).Subscribe();
+            }
+            
             info = new HitInfo(this, attacker, true);
             return true;
         }
@@ -41,9 +50,22 @@ namespace Script.Players
                 yield return new WaitForSeconds(0.1f);
                 _renderer.enabled = true;
                 yield return new WaitForSeconds(0.1f);
-
             }
             _invicible = false;
+        }
+        
+        private IEnumerator Die()
+        {
+            _invicible = true;
+            for (var time = 0; time < 6; time++)
+            {
+                _renderer.enabled = false;
+                yield return new WaitForSeconds(0.1f);
+                _renderer.enabled = true;
+                yield return new WaitForSeconds(0.1f);
+
+            }
+            _renderer.enabled = false;
         }
     }
 }

@@ -54,14 +54,12 @@ namespace Script.UI
             }
         }
 
-        private void OnEffectsNumChanged(Tuple<int, int> tuple)
+        private void OnEffectsNumChanged(EffectsNum effectsNum)
         {
-            var fireNum = tuple.Item1;
-            var iceNum = tuple.Item2;
             for (var i = 0; i < _tipsNum; i++)
             {
-                _fireRenders[i].enabled = i < fireNum;
-                _iceRenders[i].enabled = i < iceNum;
+                _fireRenders[i].enabled = i < effectsNum.Fire;
+                _iceRenders[i].enabled = i < effectsNum.Ice;
             }
   
         }

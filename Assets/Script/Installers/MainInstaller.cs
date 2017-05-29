@@ -1,16 +1,7 @@
-﻿using Script.Attackers;
-using Script.Bullets;
-using Script.Characters;
-using Script.Effect;
+﻿using Script.Signals;
 using Script.Factories;
-using Script.Hits;
-using Script.Items;
 using Script.Maps;
-using Script.Players;
-using Script.Postions;
 using Script.UI;
-using Script.Weapons;
-using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -33,6 +24,12 @@ namespace Script.Installers
             Container.Bind<IMapCreator>().To<MapCreator>().AsSingle();
             Container.Bind<IItemSpawner>().To<ItemSpawner>().AsSingle();
             Container.Bind<IMapTipsCollection>().To<MapTipsCollection>().AsSingle().NonLazy();
+            
+            Container.DeclareSignal<PlayerDiedSignal>();
+            Container.DeclareSignal<SettlementSignal>();
+            
+            Container.Bind<PlayerDieManager>().AsSingle().NonLazy();
+            Container.Bind<EventManager>().AsSingle().NonLazy();
 
             foreach (var block in _blocks)
             {
@@ -41,7 +38,8 @@ namespace Script.Installers
                     .WithArguments(block, new GameObject("Blocks").transform);
             }
 
-            Container.Bind<ITickable>().To<MainLoop>().AsSingle();
+            Container.Bind<ITickable>().To<MainLoop>().AsTransient();
+            Container.Bind<ITickable>().To<Timer>().AsTransient();
 
             foreach (var item in _items)
             {
