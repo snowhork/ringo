@@ -36,7 +36,12 @@ namespace Script.Characters
         }
         private IWeapon _currentWeapon;
         private ISpecialWeapon _specialWeapon;
-        private int _specialWeaponCount;
+        private ReactiveProperty<int> _specialWeaponCount = new ReactiveProperty<int>(0);
+
+        public IObservable<int> OnSpecialWeaponCount
+        {
+            get { return _specialWeaponCount; }
+        }
 
         public BaseCharacterParameter(IWeapon currentWeapon, ISpecialWeapon specialWeapon, Const.Attribute attribute, HpParameter hpParameter)
         {
@@ -77,8 +82,8 @@ namespace Script.Characters
 
         public int SpecialWeaponCount
         {
-            get { return _specialWeaponCount; }
-            set { _specialWeaponCount = value; }
+            get { return _specialWeaponCount.Value; }
+            set { _specialWeaponCount.Value = value; }
         }
         public IObservable<Unit> OnDied
         {

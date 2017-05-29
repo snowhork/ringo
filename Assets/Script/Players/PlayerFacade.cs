@@ -19,6 +19,8 @@ namespace Script.Players
         private BaseCharacterParameter _parameter;
         private IBehaviour _behaviour;
         private IHittable _hittable;
+        private SettlementSignal _settlementSignal;
+        private bool _issettled;
 
         public Point Point
         {
@@ -33,12 +35,14 @@ namespace Script.Players
 
         [Inject]
         public void Construct(IMapTipsCore mapTipsCore, BaseCharacterParameter parameter, IBehaviour behaviour,
-            IHittable hittable)
+            IHittable hittable, SettlementSignal settlementSignal)
         {
             _parameter = parameter;
             _behaviour = behaviour;
             _hittable = hittable;
             _mapTipsCore = mapTipsCore;
+            _settlementSignal = settlementSignal;
+            settlementSignal.AsObservable.Subscribe(_ => _issettled = true);
 
             _parameter.OnDied.Subscribe(_ => Destroy());
             
@@ -69,7 +73,7 @@ namespace Script.Players
 
         private void Update()
         {
-            _behaviour.Execute();
+            if(!_issettled)_behaviour.Execute();
         }
 
         public void RegisterOnMapTip()

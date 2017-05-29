@@ -1,18 +1,18 @@
-﻿using Script.Characters;
+using Script.Characters;
+using UniRx;
 using UnityEngine;
 using Zenject;
-using UniRx;
 
 namespace Script.UI
 {
-    public class HeartUi : MonoBehaviour
+    public class SpecialUi : MonoBehaviour
     {
-        [SerializeField] private Renderer[] _hearts;
+        [SerializeField] private Renderer[] _specials;
 
         [Inject]
         public void Construct(BaseCharacterParameter parameter)
         {
-            parameter.OnHpChanged.Subscribe(SetHeart);
+            parameter.OnSpecialWeaponCount.Subscribe(SetSpecial);
         }
         
         private void Start()
@@ -20,15 +20,13 @@ namespace Script.UI
             transform.parent = Camera.main.transform;
             transform.localPosition = Vector3.zero;
             transform.localRotation = Quaternion.identity;
-            SetHeart(1);
         }
 
-        private void SetHeart(int hp)
+        private void SetSpecial(int sp)
         {
-
-            for (var i = 0; i < _hearts.Length; i++)
+            for (var i = 0; i < _specials.Length; i++)
             {
-                _hearts[i].GetComponent<MeshRenderer>().enabled = (i < hp);
+                _specials[i].GetComponent<MeshRenderer>().enabled = (i < sp);
             }
         }
     }
