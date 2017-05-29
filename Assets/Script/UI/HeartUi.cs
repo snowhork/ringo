@@ -20,7 +20,7 @@ namespace Script.UI
             transform.parent = Camera.main.transform;
             transform.localPosition = Vector3.zero;
             transform.localRotation = Quaternion.identity;
-            SetHeart(3);
+            SetHeart(1);
         }
 
         private void SetHeart(int hp)

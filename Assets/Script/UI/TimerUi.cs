@@ -25,7 +25,9 @@ namespace Script.UI
 
         private void Update()
         {
-            _timerBar.localScale = new Vector3(_timer.RemainTime/Timer.MaxTime, 1f, 1f);
+            var par = _timer.RemainTime / Timer.MaxTime;
+            if (par < 0) par = 0;
+            _timerBar.localScale = new Vector3(par, 1f, 1f);
         }
     }
 }

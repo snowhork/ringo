@@ -19,7 +19,6 @@ namespace Script
             _settlementSignal = settlementSignal;
         }
 
-
         public void Tick()
         {
             _remainTime -= Time.deltaTime;
@@ -27,8 +26,7 @@ namespace Script
             {
                 TimerEnd();
             }            
-        }
-        
+        }        
 
         public float RemainTime
         {

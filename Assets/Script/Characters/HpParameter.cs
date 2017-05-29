@@ -5,7 +5,7 @@ namespace Script.Characters
 {
     public class HpParameter
     {
-        private IntReactiveProperty _hp = new IntReactiveProperty(3);
+        private IntReactiveProperty _hp = new IntReactiveProperty(1);
         private readonly PlayerDiedSignal _playerDiedSignal;
         private readonly Const.Attribute _attribute;
         private readonly Subject<Unit> _diedSubject = new Subject<Unit>();

@@ -15,6 +15,7 @@ namespace Script.Installers
         [SerializeField] private GameObject[] _players;
         [SerializeField] private GameObject _effectsUi;
         [SerializeField] private GameObject _timerUi;
+        [SerializeField] private GameObject _resultUi;
 
         public override void InstallBindings()
         {
@@ -59,6 +60,7 @@ namespace Script.Installers
 
             Container.Bind<EffectUi>().FromComponentInNewPrefab(_effectsUi).AsSingle().NonLazy();
             Container.Bind<TimerUi>().FromComponentInNewPrefab(_timerUi).AsSingle().NonLazy();
+            Container.Bind<ResultUi>().FromComponentInNewPrefab(_resultUi).AsSingle().NonLazy();
         }
     }
 }
