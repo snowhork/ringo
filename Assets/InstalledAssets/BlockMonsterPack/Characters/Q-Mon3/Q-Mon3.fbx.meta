@@ -62,6 +62,8 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -72,7 +74,287 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Q-Mon3|Q-Mon_3 Idle
+      takeName: Q-Mon3|Q-Mon_3 Idle
+      firstFrame: 0
+      lastFrame: 20
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Q-Mon3
+        weight: 1
+      - path: Q-Mon3/Position
+        weight: 1
+      - path: Q-Mon3/Position/Control_Leg_L
+        weight: 1
+      - path: Q-Mon3/Position/Control_Leg_L/Control_Leg_L_end
+        weight: 1
+      - path: Q-Mon3/Position/Control_Leg_R
+        weight: 1
+      - path: Q-Mon3/Position/Control_Leg_R/Control_Leg_R_end
+        weight: 1
+      - path: Q-Mon3/Position/Control_SS
+        weight: 1
+      - path: Q-Mon3/Position/Control_SS/Control_SS_end
+        weight: 1
+      - path: Q-Mon3/Position/Pivot
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Body
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Body/Body_end
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_L
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_L/Leg_L
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_L/Leg_L/Feet_L
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_L/Leg_L/Feet_L/Feet_L_end
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_R
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_R/Leg_R
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_R/Leg_R/Feet_R
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_R/Leg_R/Feet_R/Feet_R_end
+        weight: 1
+      - path: Q-Mon3_Objt
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Q-Mon3|Q-Mon_3 Run
+      takeName: Q-Mon3|Q-Mon_3 Run
+      firstFrame: 0
+      lastFrame: 18
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Q-Mon3
+        weight: 1
+      - path: Q-Mon3/Position
+        weight: 1
+      - path: Q-Mon3/Position/Control_Leg_L
+        weight: 1
+      - path: Q-Mon3/Position/Control_Leg_L/Control_Leg_L_end
+        weight: 1
+      - path: Q-Mon3/Position/Control_Leg_R
+        weight: 1
+      - path: Q-Mon3/Position/Control_Leg_R/Control_Leg_R_end
+        weight: 1
+      - path: Q-Mon3/Position/Control_SS
+        weight: 1
+      - path: Q-Mon3/Position/Control_SS/Control_SS_end
+        weight: 1
+      - path: Q-Mon3/Position/Pivot
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Body
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Body/Body_end
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_L
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_L/Leg_L
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_L/Leg_L/Feet_L
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_L/Leg_L/Feet_L/Feet_L_end
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_R
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_R/Leg_R
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_R/Leg_R/Feet_R
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_R/Leg_R/Feet_R/Feet_R_end
+        weight: 1
+      - path: Q-Mon3_Objt
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Q-Mon3|Q-Mon_3 Stand
+      takeName: Q-Mon3|Q-Mon_3 Stand
+      firstFrame: 0
+      lastFrame: 1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Q-Mon3
+        weight: 1
+      - path: Q-Mon3/Position
+        weight: 1
+      - path: Q-Mon3/Position/Control_Leg_L
+        weight: 1
+      - path: Q-Mon3/Position/Control_Leg_L/Control_Leg_L_end
+        weight: 1
+      - path: Q-Mon3/Position/Control_Leg_R
+        weight: 1
+      - path: Q-Mon3/Position/Control_Leg_R/Control_Leg_R_end
+        weight: 1
+      - path: Q-Mon3/Position/Control_SS
+        weight: 1
+      - path: Q-Mon3/Position/Control_SS/Control_SS_end
+        weight: 1
+      - path: Q-Mon3/Position/Pivot
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Body
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Body/Body_end
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_L
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_L/Leg_L
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_L/Leg_L/Feet_L
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_L/Leg_L/Feet_L/Feet_L_end
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_R
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_R/Leg_R
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_R/Leg_R/Feet_R
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_R/Leg_R/Feet_R/Feet_R_end
+        weight: 1
+      - path: Q-Mon3_Objt
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Q-Mon3_Objt|Q-Mon_3 Run
+      takeName: Q-Mon3_Objt|Q-Mon_3 Run
+      firstFrame: 0
+      lastFrame: 18
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Q-Mon3
+        weight: 1
+      - path: Q-Mon3/Position
+        weight: 1
+      - path: Q-Mon3/Position/Control_Leg_L
+        weight: 1
+      - path: Q-Mon3/Position/Control_Leg_L/Control_Leg_L_end
+        weight: 1
+      - path: Q-Mon3/Position/Control_Leg_R
+        weight: 1
+      - path: Q-Mon3/Position/Control_Leg_R/Control_Leg_R_end
+        weight: 1
+      - path: Q-Mon3/Position/Control_SS
+        weight: 1
+      - path: Q-Mon3/Position/Control_SS/Control_SS_end
+        weight: 1
+      - path: Q-Mon3/Position/Pivot
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Body
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Body/Body_end
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_L
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_L/Leg_L
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_L/Leg_L/Feet_L
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_L/Leg_L/Feet_L/Feet_L_end
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_R
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_R/Leg_R
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_R/Leg_R/Feet_R
+        weight: 1
+      - path: Q-Mon3/Position/Pivot/Hip_R/Leg_R/Feet_R/Feet_R_end
+        weight: 1
+      - path: Q-Mon3_Objt
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
