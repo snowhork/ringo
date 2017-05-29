@@ -12,6 +12,7 @@ namespace Script.Characters
     public class BaseCharacterParameter
     {
         [SerializeField] private float _speed;
+        private float _coolTime = 1.0f;
         private Point _point;
 
         private readonly HpParameter _hpParameter;
@@ -56,6 +57,12 @@ namespace Script.Characters
         {
             get { return _speed; }
             set { _speed = value; }
+        }
+
+        public float CoolTime
+        {
+            get { return _coolTime; }
+            set { _coolTime = value; }
         }
 
         public IWeapon CurrentWeapon

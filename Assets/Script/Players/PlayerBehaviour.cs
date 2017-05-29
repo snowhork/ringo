@@ -108,7 +108,7 @@ namespace Script.Players
 
         private IEnumerator Charge()
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(_parameter.CoolTime);
             _isAttacking = false;
         }
 
