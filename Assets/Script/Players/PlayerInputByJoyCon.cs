@@ -23,15 +23,19 @@ namespace Script.Players
 
         public Point AttackInput()
         {
-            if (Input.GetButtonDown("UpButton" + _id)) return new Point(0, 1);
-            if (Input.GetButtonDown("DownButton" + _id)) return new Point(0, -1);
-            if (Input.GetButtonDown("RightButton" + _id)) return new Point(1, 0);
-            if (Input.GetButtonDown("LeftButton" + _id)) return new Point(-1, 0);
+            if (Input.GetButtonDown("UpButton" + _id) && !Input.GetButton("PowerButton" + _id)) return new Point(0, 1);
+            if (Input.GetButtonDown("DownButton" + _id) && !Input.GetButton("PowerButton" + _id)) return new Point(0, -1);
+            if (Input.GetButtonDown("RightButton" + _id) && !Input.GetButton("PowerButton" + _id)) return new Point(1, 0);
+            if (Input.GetButtonDown("LeftButton" + _id) && !Input.GetButton("PowerButton" + _id)) return new Point(-1, 0);
             return new Point(0, 0);
         }
 
         public Point SpecialAttackInput()
         {
+            if (Input.GetButtonDown("UpButton" + _id) && Input.GetButton("PowerButton" + _id)) return new Point(0, 1);
+            if (Input.GetButtonDown("DownButton" + _id) && Input.GetButton("PowerButton" + _id)) return new Point(0, -1);
+            if (Input.GetButtonDown("RightButton" + _id) && Input.GetButton("PowerButton" + _id)) return new Point(1, 0);
+            if (Input.GetButtonDown("LeftButton" + _id) && Input.GetButton("PowerButton" + _id)) return new Point(-1, 0);
             return new Point(0, 0);
         }
     }
