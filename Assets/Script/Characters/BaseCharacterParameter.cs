@@ -28,21 +28,22 @@ namespace Script.Characters
         }
 
         private Const.Attribute _attribute;
-        
+
         public Const.Attribute Attribute
         {
             get { return _attribute; }
         }
-
-        private readonly List<IWeapon> _weapons;
         private IWeapon _currentWeapon;
+        private ISpecialWeapon _specialWeapon;
+        private int _specialWeaponCount;
 
-        public BaseCharacterParameter(List<IWeapon> weapons, Const.Attribute attribute, HpParameter hpParameter)
+        public BaseCharacterParameter(IWeapon currentWeapon, ISpecialWeapon specialWeapon, Const.Attribute attribute, HpParameter hpParameter)
         {
-            _weapons = weapons;
             _attribute = attribute;
+            _currentWeapon = currentWeapon;
+            _specialWeapon = specialWeapon;
             _hpParameter = hpParameter;
-            _currentWeapon = _weapons[0];
+
         }
 
         public int Hp
@@ -62,6 +63,16 @@ namespace Script.Characters
             get { return _currentWeapon; }
         }
 
+        public IWeapon SpecialWeapon
+        {
+            get { return _specialWeapon; }
+        }
+
+        public int SpecialWeaponCount
+        {
+            get { return _specialWeaponCount; }
+            set { _specialWeaponCount = value; }
+        }
         public IObservable<Unit> OnDied
         {
             get { return _hpParameter.OnDied; }

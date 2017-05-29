@@ -25,7 +25,7 @@ namespace Script.Characters
         {
             get { return _diedSubject; }
         }
-        
+
         public int Hp
         {
             get { return _hp.Value; }

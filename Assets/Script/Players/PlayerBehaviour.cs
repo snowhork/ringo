@@ -39,12 +39,14 @@ namespace Script.Players
 
         public void Execute()
         {
-            
+
             var moveForward = _input.MoveInput();
-            var attackForward = _input.AttackInput();            
+            var attackForward = _input.AttackInput();
+            var specialAttackForward = _input.SpecialAttackInput();
 
             if (!(moveForward   == Point.Zero() || _isMoving)) Moving(moveForward);
-            if (!(attackForward == Point.Zero() || _isAttacking )) Attacking(attackForward);
+            if (!(attackForward == Point.Zero() || _isAttacking)) Attacking(attackForward);
+            if (!(specialAttackForward == Point.Zero() || _isAttacking )) SpecialAttacking(specialAttackForward);
         }
 
         public IObservable<Unit> RemoveFromMapTip
@@ -84,6 +86,16 @@ namespace Script.Players
             _parameter.CurrentWeapon.Execute(_parameter.Point, attackForward);
             _isAttacking = true;
             Observable.FromCoroutine(Charge).Subscribe();
+        }
+
+        private void SpecialAttacking(Point specialAttackForward)
+        {
+            if (_parameter.SpecialWeaponCount <= 0) return;
+            SetRotation(specialAttackForward);
+            _parameter.SpecialWeapon.Execute(_parameter.Point, specialAttackForward);
+            _isAttacking = true;
+            Observable.FromCoroutine(Charge).Subscribe();
+            _parameter.SpecialWeaponCount --;
         }
 
         private void SetRotation(Point forward)

@@ -16,7 +16,7 @@ namespace Script.Installers
         [SerializeField] private GameObject _effectsUi;
 
         public override void InstallBindings()
-        {            
+        {
             Container.Bind<MapTipsFactory>()
                 .To<MapTipsFactory>().AsSingle()
                 .WithArguments(_normalMapTip,  new GameObject("MapTips").transform);

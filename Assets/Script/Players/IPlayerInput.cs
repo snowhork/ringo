@@ -6,5 +6,6 @@ namespace Script.Players
     {
         Point MoveInput();
         Point AttackInput();
+        Point SpecialAttackInput();
     }
 }

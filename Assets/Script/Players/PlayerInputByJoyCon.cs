@@ -29,5 +29,10 @@ namespace Script.Players
             if (Input.GetButtonDown("LeftButton" + _id)) return new Point(-1, 0);
             return new Point(0, 0);
         }
+
+        public Point SpecialAttackInput()
+        {
+            return new Point(0, 0);
+        }
     }
 }
