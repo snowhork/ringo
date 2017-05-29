@@ -49,6 +49,8 @@ namespace Script.Maps
                     var tip = _collection.GetMapTip(x, y);
                     if (tip.Player != null) continue;
                     if (tip.Block != null) continue;
+                    //if(Random.Range(0,2) == 1) continue;
+                    
                     tip.Register(_blocksFactories[1].Create(tip.Point));
                 }
             }
