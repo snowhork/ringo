@@ -23,7 +23,6 @@ namespace Script.Players
 
         private bool _isMoving = false;
         private bool _isAttacking = false;
-        private bool _isSecialAttacking = false;
 
         private readonly Subject<Unit> _removeSubject = new Subject<Unit>();
         private readonly Subject<Unit> _registerSubject = new Subject<Unit>();
@@ -46,9 +45,12 @@ namespace Script.Players
         {
             var moveForward = _input.MoveInput();
             var attackForward = _input.AttackInput();
+            var specialAttackForward = _input.SpecialAttackInput();
 
-            if (!(moveForward   == Point.Zero() || _isMoving || _isSpecialAttacking)) Moving(moveForward);
-            if (!(attackForward == Point.Zero() || _isAttacking )) Attacking(attackForward);
+
+            if (!(moveForward   == Point.Zero() || _isMoving)) Moving(moveForward);
+            if (!(attackForward == Point.Zero() || _isAttacking)) Attacking(attackForward);
+            if (!(specialAttackForward == Point.Zero() || _isAttacking )) SpecialAttacking(specialAttackForward);
         }
 
         public IObservable<Unit> RemoveFromMapTip
@@ -90,12 +92,14 @@ namespace Script.Players
             Observable.FromCoroutine(Charge).Subscribe();
         }
 
-        private void SpecialAttacking(Point attackForward)
+        private void SpecialAttacking(Point specialAttackForward)
         {
-            SetRotation(attackForward);
-            _parameter.CurrentWeapon.Execute(_parameter.Point, attackForward);
+            if (_parameter.SpecialWeaponCount <= 0) return;
+            SetRotation(specialAttackForward);
+            _parameter.SpecialWeapon.Execute(_parameter.Point, specialAttackForward);
             _isAttacking = true;
             Observable.FromCoroutine(Charge).Subscribe();
+            _parameter.SpecialWeaponCount --;
         }
 
         private void SetRotation(Point forward)

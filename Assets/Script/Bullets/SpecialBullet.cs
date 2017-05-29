@@ -16,19 +16,19 @@ namespace Script.Bullets
 
         private float Speed
         {
-            get { return 1.0f; }
+            get { return 3.0f; }
         }
 
         private int Range
         {
-            get { return 3; }
+            get { return 10; }
         }
 
         private IEnumerator MoveCoroutine()
         {
             var distance = 0;
             SetTransform();
-            while (distance <= 3)
+            while (distance <= Range)
             {
                 var startPos = transform.position;
                 var delta = 0f;

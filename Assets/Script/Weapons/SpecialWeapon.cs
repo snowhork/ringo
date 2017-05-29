@@ -2,6 +2,7 @@
 using Script.Factories;
 using Script.Players;
 using Script.Postions;
+using UnityEngine;
 
 namespace Script.Weapons
 {
@@ -18,6 +19,7 @@ namespace Script.Weapons
 
         public override void Execute(Point current, Point forward)
         {
+            Debug.Log("おチンチン");
             var bullet = _factory.Create(current);
             bullet.Parameter = _parameter;
             bullet.AttackForward = forward;

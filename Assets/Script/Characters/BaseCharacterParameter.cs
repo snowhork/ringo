@@ -33,10 +33,10 @@ namespace Script.Characters
             get { return _attribute; }
         }
         private IWeapon _currentWeapon;
-        private IWeapon _specialWeapon;
+        private ISpecialWeapon _specialWeapon;
         private int _specialWeaponCount;
 
-        public BaseCharacterParameter(IWeapon currentWeapon, IWeapon specialWeapon, Const.Attribute attribute)
+        public BaseCharacterParameter(IWeapon currentWeapon, ISpecialWeapon specialWeapon, Const.Attribute attribute)
         {
             _attribute = attribute;
             _currentWeapon = currentWeapon;
@@ -61,6 +61,11 @@ namespace Script.Characters
         public IWeapon CurrentWeapon
         {
             get { return _currentWeapon; }
+        }
+
+        public IWeapon SpecialWeapon
+        {
+            get { return _specialWeapon; }
         }
 
         public int SpecialWeaponCount
