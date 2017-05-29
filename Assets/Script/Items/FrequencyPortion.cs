@@ -14,6 +14,7 @@ namespace Script.Items
         public override void Use(BaseCharacterParameter parameter)
         {
             parameter.CoolTime -= _frequencyValue;
+			Debug.Log(parameter.CoolTime);
             Destroy();
         }
     }
