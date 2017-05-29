@@ -32,15 +32,15 @@ namespace Script.Characters
         {
             get { return _attribute; }
         }
-
-        private readonly List<IWeapon> _weapons;
         private IWeapon _currentWeapon;
+        private IWeapon _specialWeapon;
+        private int _specialWeaponCount;
 
-        public BaseCharacterParameter(List<IWeapon> weapons, Const.Attribute attribute)
+        public BaseCharacterParameter(IWeapon currentWeapon, IWeapon specialWeapon, Const.Attribute attribute)
         {
-            _weapons = weapons;
             _attribute = attribute;
-            _currentWeapon = _weapons[0];
+            _currentWeapon = currentWeapon;
+            _specialWeapon = specialWeapon;
         }
 
         public int Hp
@@ -61,6 +61,12 @@ namespace Script.Characters
         public IWeapon CurrentWeapon
         {
             get { return _currentWeapon; }
+        }
+
+        public int SpecialWeaponCount
+        {
+            get { return _specialWeaponCount; }
+            set { _specialWeaponCount = value; }
         }
     }
 }

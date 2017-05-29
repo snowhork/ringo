@@ -23,6 +23,7 @@ namespace Script.Players
 
         private bool _isMoving = false;
         private bool _isAttacking = false;
+        private bool _isSecialAttacking = false;
 
         private readonly Subject<Unit> _removeSubject = new Subject<Unit>();
         private readonly Subject<Unit> _registerSubject = new Subject<Unit>();
@@ -46,7 +47,7 @@ namespace Script.Players
             var moveForward = _input.MoveInput();
             var attackForward = _input.AttackInput();
 
-            if (!(moveForward   == Point.Zero() || _isMoving)) Moving(moveForward);
+            if (!(moveForward   == Point.Zero() || _isMoving || _isSpecialAttacking)) Moving(moveForward);
             if (!(attackForward == Point.Zero() || _isAttacking )) Attacking(attackForward);
         }
 
@@ -82,6 +83,14 @@ namespace Script.Players
         }
 
         private void Attacking(Point attackForward)
+        {
+            SetRotation(attackForward);
+            _parameter.CurrentWeapon.Execute(_parameter.Point, attackForward);
+            _isAttacking = true;
+            Observable.FromCoroutine(Charge).Subscribe();
+        }
+
+        private void SpecialAttacking(Point attackForward)
         {
             SetRotation(attackForward);
             _parameter.CurrentWeapon.Execute(_parameter.Point, attackForward);

@@ -18,6 +18,7 @@ namespace Script.Installers
     {
         [SerializeField] private Transform _transform;
         [SerializeField] private GameObject _cannonBullet;
+        [SerializeField] private GameObject _specialBullet;
         [SerializeField] private Const.Attribute _attribute;
         [SerializeField] private GameObject _effect;
         [SerializeField] private Renderer _renderer;
@@ -42,9 +43,18 @@ namespace Script.Installers
                 .AsTransient()
                 .WithArguments(_attribute);
 
+            Container.Bind<ISpecialWeapon>()
+                .To<SpecialWeapon>()
+                .AsTransient()
+                .WithArguments(_attribute);
+
             Container.Bind<RegistablesFactory<CannonBullet>>()
                 .AsTransient()
                 .WithArguments(_cannonBullet, new GameObject("Bullets").transform);
+
+            Container.Bind<RegistablesFactory<SpecialBullet>>()
+                .AsTransient()
+                .WithArguments(_specialBullet, new GameObject("Bullets").transform);
 
             Container.Bind<RegistablesFactory<BaseEffect>>()
                 .AsTransient()

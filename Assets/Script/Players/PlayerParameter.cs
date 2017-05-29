@@ -7,8 +7,8 @@ namespace Script.Players
 {
     public class PlayerParameter : BaseCharacterParameter
     {
-        public PlayerParameter(List<IWeapon> weapons, Const.Attribute attribute)
-            : base(weapons, attribute)
+        public PlayerParameter(IWeapon currentWeapon, IWeapon specialWeapon, Const.Attribute attribute)
+            : base(currentWeapon, specialWeapon, attribute)
         {
         }
     }

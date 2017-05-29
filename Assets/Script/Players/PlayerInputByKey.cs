@@ -22,5 +22,11 @@ namespace Script.Players
             if (Input.GetKey(KeyCode.S))   return new Point(0, -1);
             return new Point(0, 0);
         }
+
+        public Point SpecialAttackInput()
+        {
+            if (Input.GetKey(KeyCode.P))  return new Point(-1, 0);
+            return new Point(0, 0);
+        }
     }
 }
