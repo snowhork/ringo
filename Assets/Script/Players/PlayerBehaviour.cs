@@ -108,14 +108,14 @@ namespace Script.Players
 
         private IEnumerator Charge()
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(_parameter.CoolTime);
             _isAttacking = false;
         }
 
         private IEnumerator MoveCoroutine(Point inputMove)
         {
             _isMoving = true;
-            var speed = 0.1f;
+            var speed = _parameter.Speed;
             var startPos = _transform.position;
             var delta = 0f;
 

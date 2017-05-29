@@ -26,7 +26,8 @@ namespace Script.Maps
 			var x = point.X;
 			var y = point.Y;
 			var tip = _collection.GetMapTip(x, y);
-			tip.Register(_itemsFactories[1].Create(point));
+            var itemNum = _itemsFactories.Count;
+			tip.Register(_itemsFactories[Random.Range(0, itemNum)].Create(point));
         }
     }
 }
