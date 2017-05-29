@@ -23,6 +23,7 @@ namespace Script.Installers
         [SerializeField] private GameObject _effect;
         [SerializeField] private Renderer _renderer;
         [SerializeField] private HeartUi _heartUi;
+        [SerializeField] private SpecialUi _specialUi;
 
         public override void InstallBindings()
         {
@@ -31,6 +32,7 @@ namespace Script.Installers
             Container.BindInstance(_attribute);
             Container.BindInstance(_renderer);
             Container.Bind<HeartUi>().FromComponentInNewPrefab(_heartUi).AsCached().NonLazy();
+            Container.Bind<SpecialUi>().FromComponentInNewPrefab(_specialUi).AsCached().NonLazy();
             Container.Bind<IBehaviour>().To<PlayerBehaviour>().AsTransient().WithArguments(_transform);
             Container.Bind<BaseCharacterParameter>().To<PlayerParameter>().AsCached();
             Container.Bind<IHittable>().To<PlayerHitter>().AsCached();
