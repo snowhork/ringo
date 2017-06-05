@@ -12,8 +12,11 @@ namespace Script.Items
 {
     public class SpecialWeaponPack : BaseItem
     {
+        [SerializeField]
+        private AudioClip _clip;
         public override void Use(BaseCharacterParameter parameter)
         {
+            SoundManager.Play(_clip);            
             parameter.SpecialWeaponCount += 1;
             Destroy();
         }

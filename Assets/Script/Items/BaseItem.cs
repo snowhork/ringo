@@ -10,11 +10,13 @@ namespace Script.Items
     {
         protected Point _point;
         protected IMapTipsCore MapTips;
+        protected SoundManager SoundManager;
 
         [Inject]
-        public void Construct(IMapTipsCore mapTipsCore)
+        public void Construct(IMapTipsCore mapTipsCore, SoundManager soundManager)
         {
             MapTips = mapTipsCore;
+            SoundManager = soundManager;
         }
 
         public Point Point

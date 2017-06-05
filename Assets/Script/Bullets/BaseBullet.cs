@@ -18,6 +18,7 @@ namespace Script.Bullets
         protected WeaponParameter _parameter;
         private Point _attackForward;
         protected List<RegistablesFactory<BaseEffect>> Factories;
+        protected SoundManager SoundManager;
 
         public Point AttackForward
         {
@@ -32,10 +33,11 @@ namespace Script.Bullets
         }
 
         [Inject]
-        public void Construct(IMapTipsCore mapTips, List<RegistablesFactory<BaseEffect>> factories)
+        public void Construct(IMapTipsCore mapTips, List<RegistablesFactory<BaseEffect>> factories, SoundManager soundManager)
         {
             MapTips = mapTips;
             Factories = factories;
+            SoundManager = soundManager;
         }
 
         public Point Point

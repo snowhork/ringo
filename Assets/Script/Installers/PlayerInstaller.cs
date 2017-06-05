@@ -24,6 +24,7 @@ namespace Script.Installers
         [SerializeField] private Renderer _renderer;
         [SerializeField] private HeartUi _heartUi;
         [SerializeField] private SpecialUi _specialUi;
+        [SerializeField] private bool _ai;
 
         public override void InstallBindings()
         {
@@ -36,8 +37,16 @@ namespace Script.Installers
             Container.Bind<IBehaviour>().To<PlayerBehaviour>().AsTransient().WithArguments(_transform);
             Container.Bind<BaseCharacterParameter>().To<PlayerParameter>().AsCached();
             Container.Bind<IHittable>().To<PlayerHitter>().AsCached();
-//            Container.Bind<IPlayerInput>().To<PlayerInputByKey>().AsCached();
-            Container.Bind<IPlayerInput>().To<PlayerInputByJoyCon>().AsCached();
+
+            if (_ai)
+            {
+                Container.Bind<IPlayerInput>().To<PlayerInputByAi>().AsCached();
+            }
+            else
+            {
+                //Container.Bind<IPlayerInput>().To<PlayerInputByKey>().AsCached();
+                Container.Bind<IPlayerInput>().To<PlayerInputByJoyCon>().AsCached();
+            }
             Container.Bind<HpParameter>().AsCached();
 
             Container.Bind<IWeapon>()

@@ -58,5 +58,6 @@ namespace Script.Blocks
         }
 
         public abstract bool Hit(IAttacker attacker, out HitInfo info);
+        public abstract bool Destroyable { get; }
     }
 }

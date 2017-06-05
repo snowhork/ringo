@@ -9,6 +9,13 @@ namespace Script.Bullets
 {
     public class SpecialBullet : BaseBullet
     {
+
+        [SerializeField] private AudioClip _clip;
+        private void Start()
+        {
+            SoundManager.Play(_clip);
+        }
+        
         public override void Execute()
         {
             StartCoroutine(MoveCoroutine());

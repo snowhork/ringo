@@ -11,5 +11,7 @@ namespace Script.Blocks
             info = new HitInfo(this, attacker, true, hittableIsBroken: false);
             return true;
         }
+        
+        public override bool Destroyable { get { return false; } }
     }
 }
