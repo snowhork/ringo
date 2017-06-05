@@ -11,8 +11,12 @@ namespace Script.Items
     {
         [SerializeField] private int _hpValue;
 
+        [SerializeField]
+        private AudioClip _clip;
+
         public override void Use(BaseCharacterParameter parameter)
         {
+            SoundManager.Play(_clip);
             parameter.Hp += _hpValue;
             Destroy();
         }

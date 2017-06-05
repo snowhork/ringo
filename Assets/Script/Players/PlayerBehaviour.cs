@@ -40,11 +40,17 @@ namespace Script.Players
         public void Execute()
         {
 
-            var moveForward = _input.MoveInput();
+            //var moveForward = _input.MoveInput();
             var attackForward = _input.AttackInput();
             var specialAttackForward = _input.SpecialAttackInput();
 
-            if (!(moveForward   == Point.Zero() || _isMoving)) Moving(moveForward);
+            if (!_isMoving)
+            {
+                var moveForward = _input.MoveInput();
+                if (!(moveForward   == Point.Zero())) Moving(moveForward);
+            }
+
+            //if (!(moveForward   == Point.Zero() || _isMoving)) Moving(moveForward);
             if (!(attackForward == Point.Zero() || _isAttacking)) Attacking(attackForward);
             if (!(specialAttackForward == Point.Zero() || _isAttacking )) SpecialAttacking(specialAttackForward);
         }

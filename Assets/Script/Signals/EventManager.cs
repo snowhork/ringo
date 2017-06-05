@@ -1,6 +1,8 @@
+using System;
 using Script.UI;
 using UnityEngine;
 using UniRx;
+using UnityEngine.SceneManagement;
 
 
 namespace Script.Signals
@@ -25,6 +27,9 @@ namespace Script.Signals
             {
                 Debug.Log(playerNum + "の勝利！");
             }
+            Observable.Return(Unit.Default)
+                .Delay(TimeSpan.FromSeconds(3f))
+                .Subscribe(_ => SceneManager.LoadScene("main"));
         }
     }
 }
