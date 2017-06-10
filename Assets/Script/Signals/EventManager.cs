@@ -19,14 +19,6 @@ namespace Script.Signals
 
         void Settlement(int playerNum)
         {
-            if (playerNum == -1)
-            {
-                Debug.Log("ドロー");
-            }
-            else
-            {
-                Debug.Log(playerNum + "の勝利！");
-            }
             Observable.Return(Unit.Default)
                 .Delay(TimeSpan.FromSeconds(3f))
                 .Subscribe(_ => SceneManager.LoadScene("main"));

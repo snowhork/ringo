@@ -11,6 +11,7 @@ namespace Script
         public const float MaxTime = 60f;
         private IMapTipsCollection _mapTipsCollection;
         private SettlementSignal _settlementSignal;
+        private bool _timeOver;
 
         public Timer(IMapTipsCollection mapTipsCollection, SettlementSignal settlementSignal)
         {
@@ -22,9 +23,10 @@ namespace Script
         public void Tick()
         {
             _remainTime -= Time.deltaTime;
-            if (_remainTime <= 0)
+            if (_remainTime <= 0 && !_timeOver)
             {
                 TimerEnd();
+                _timeOver = true;
             }            
         }        
 

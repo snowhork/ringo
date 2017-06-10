@@ -43,11 +43,16 @@ namespace Script.Players
             //var moveForward = _input.MoveInput();
             var attackForward = _input.AttackInput();
             var specialAttackForward = _input.SpecialAttackInput();
+            
+            var lookForward = _input.LookInput();
+            if (lookForward != Point.Zero()) SetForward(lookForward);
 
             if (!_isMoving)
             {
                 var moveForward = _input.MoveInput();
                 if (!(moveForward   == Point.Zero())) Moving(moveForward);
+                
+                
             }
 
             //if (!(moveForward   == Point.Zero() || _isMoving)) Moving(moveForward);
@@ -67,7 +72,7 @@ namespace Script.Players
 
         private void Moving(Point moveForward)
         {
-            SetRotation(moveForward);
+            SetForward(moveForward);
 
             var nextPoint = _parameter.Point + moveForward;
             if (!_mapTipsCore.EnterableMapTip(nextPoint)) return;
@@ -88,7 +93,7 @@ namespace Script.Players
 
         private void Attacking(Point attackForward)
         {
-            SetRotation(attackForward);
+            SetForward(attackForward);
             _parameter.CurrentWeapon.Execute(_parameter.Point, attackForward);
             _isAttacking = true;
             Observable.FromCoroutine(Charge).Subscribe();
@@ -97,15 +102,16 @@ namespace Script.Players
         private void SpecialAttacking(Point specialAttackForward)
         {
             if (_parameter.SpecialWeaponCount <= 0) return;
-            SetRotation(specialAttackForward);
+            SetForward(specialAttackForward);
             _parameter.SpecialWeapon.Execute(_parameter.Point, specialAttackForward);
             _isAttacking = true;
             Observable.FromCoroutine(Charge).Subscribe();
             _parameter.SpecialWeaponCount --;
         }
 
-        private void SetRotation(Point forward)
+        private void SetForward(Point forward)
         {
+            _parameter.Forward = forward;
             if(forward.X > 0) _transform.rotation = Quaternion.Euler(0, 90, 0);
             if(forward.X < 0) _transform.rotation = Quaternion.Euler(0, -90, 0);
             if(forward.Y > 0) _transform.rotation = Quaternion.Euler(0, 0, 0);

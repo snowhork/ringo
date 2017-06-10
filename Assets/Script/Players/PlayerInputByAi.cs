@@ -29,8 +29,12 @@ namespace Script.Players
                     _player = player;
                     break;
                 }
-            }
-            
+            }            
+        }
+
+        public Point LookInput()
+        {
+            return Point.Zero();
         }
 
         public Point MoveInput()

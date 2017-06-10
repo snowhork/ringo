@@ -2,6 +2,7 @@
 using Script.Factories;
 using Script.Players;
 using Script.Postions;
+using UnityEngine;
 
 namespace Script.Weapons
 {
@@ -21,6 +22,11 @@ namespace Script.Weapons
             var bullet = _factory.Create(current);
             bullet.Parameter = _parameter;
             bullet.AttackForward = forward;
+            if(forward.X > 0) bullet.transform.rotation = Quaternion.Euler(0, 90, 0);
+            if(forward.X < 0) bullet.transform.rotation = Quaternion.Euler(0, -90, 0);
+            if(forward.Y > 0) bullet.transform.rotation = Quaternion.Euler(0, 0, 0);
+            if(forward.Y < 0) bullet.transform.rotation = Quaternion.Euler(0, 180, 0);
+            //bullet.transform.LookAt(Camera.main.transform);
             bullet.Execute();
         }
     }

@@ -14,6 +14,7 @@ namespace Script.Characters
         private float _speed = 0.1f;
         private float _coolTime = 1.0f;
         private Point _point;
+        private Point _forward = new Point(0, 1);
 
         private readonly HpParameter _hpParameter;
 
@@ -26,6 +27,12 @@ namespace Script.Characters
         {
             get { return _point; }
             set { _point = value; }
+        }
+        
+        public Point Forward
+        {
+            get { return _forward; }
+            set { _forward = value; }
         }
 
         private Const.Attribute _attribute;

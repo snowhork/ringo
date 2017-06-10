@@ -5,6 +5,11 @@ namespace Script.Players
 {
     public class PlayerInputByKey : IPlayerInput
     {
+        public Point LookInput()
+        {
+            return Point.Zero();
+        }
+
         public Point MoveInput()
         {
             if (Input.GetKey(KeyCode.RightArrow)) return new Point(1,  0);
